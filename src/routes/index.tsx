@@ -1,24 +1,108 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Trophy, Users, Zap, Radio } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "ESAG Cricket Auction — Live Player Bidding" },
+      {
+        name: "description",
+        content:
+          "Register as a player, form a team, and bid live for your squad at the ESAG cricket auction.",
+      },
+      { property: "og:title", content: "ESAG Cricket Auction" },
+      {
+        property: "og:description",
+        content: "Live player bidding for the ESAG cricket match.",
+      },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      {/* Nav */}
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <div className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
+            <Trophy className="h-5 w-5 text-primary-foreground" />
+          </div>
+          <span className="font-bold tracking-tight">ESAG Auction</span>
+        </div>
+        <Link
+          to="/auth"
+          className="rounded-md bg-gradient-neon px-4 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple hover:opacity-90"
+        >
+          Sign in
+        </Link>
+      </header>
+
+      {/* Hero */}
+      <section className="mx-auto max-w-4xl px-6 py-20 text-center">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
+          <span className="h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
+          Engineering Students' Association Gampaha
+        </div>
+        <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
+          <span className="bg-gradient-neon bg-clip-text text-transparent glow-text">
+            Cricket Auction
+          </span>
+          <br />
+          <span className="text-foreground">Reimagined.</span>
+        </h1>
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+          AI-graded players. Live bidding. Real-time team dashboards. Everything
+          you need to build your championship squad.
+        </p>
+        <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/auth"
+            className="rounded-lg bg-gradient-neon px-6 py-3 font-semibold text-primary-foreground shadow-neon-purple"
+          >
+            Get started
+          </Link>
+          <Link
+            to="/auth"
+            className="rounded-lg border border-border bg-card/60 px-6 py-3 font-semibold backdrop-blur"
+          >
+            Team login
+          </Link>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 sm:grid-cols-3">
+        {[
+          {
+            icon: Zap,
+            title: "AI-graded players",
+            body: "Skill and fitness scoring assigns each player a category and base price automatically.",
+          },
+          {
+            icon: Radio,
+            title: "Live auction streaming",
+            body: "Every team sees the current player, last bid, and their remaining budget in real time.",
+          },
+          {
+            icon: Users,
+            title: "Round management",
+            body: "Unsold players auto-requeue into rounds 2 and 3 until every squad is complete.",
+          },
+        ].map(({ icon: Icon, title, body }) => (
+          <div
+            key={title}
+            className="rounded-2xl border border-border bg-card/60 p-6 shadow-card backdrop-blur"
+          >
+            <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-neon-soft">
+              <Icon className="h-5 w-5 text-neon-blue" />
+            </div>
+            <h3 className="font-semibold">{title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+          </div>
+        ))}
+      </section>
     </div>
   );
 }
