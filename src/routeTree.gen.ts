@@ -15,9 +15,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedTeamRegistrationRouteImport } from './routes/_authenticated/team-registration'
 import { Route as AuthenticatedPlayerRegistrationRouteImport } from './routes/_authenticated/player-registration'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAuctionControlRouteImport } from './routes/_authenticated/auction-control'
 import { Route as AuthenticatedAuctionRouteImport } from './routes/_authenticated/auction'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedAdminAuctionRouteImport } from './routes/_authenticated/admin.auction'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -50,6 +50,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAuctionControlRoute =
+  AuthenticatedAuctionControlRouteImport.update({
+    id: '/auction-control',
+    path: '/auction-control',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAuctionRoute = AuthenticatedAuctionRouteImport.update({
   id: '/auction',
   path: '/auction',
@@ -60,44 +66,38 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAdminAuctionRoute =
-  AuthenticatedAdminAuctionRouteImport.update({
-    id: '/auction',
-    path: '/auction',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/auction': typeof AuthenticatedAuctionRoute
+  '/auction-control': typeof AuthenticatedAuctionControlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/player-registration': typeof AuthenticatedPlayerRegistrationRoute
   '/team-registration': typeof AuthenticatedTeamRegistrationRoute
-  '/admin/auction': typeof AuthenticatedAdminAuctionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/auction': typeof AuthenticatedAuctionRoute
+  '/auction-control': typeof AuthenticatedAuctionControlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/player-registration': typeof AuthenticatedPlayerRegistrationRoute
   '/team-registration': typeof AuthenticatedTeamRegistrationRoute
-  '/admin/auction': typeof AuthenticatedAdminAuctionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/auction': typeof AuthenticatedAuctionRoute
+  '/_authenticated/auction-control': typeof AuthenticatedAuctionControlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/player-registration': typeof AuthenticatedPlayerRegistrationRoute
   '/_authenticated/team-registration': typeof AuthenticatedTeamRegistrationRoute
-  '/_authenticated/admin/auction': typeof AuthenticatedAdminAuctionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,20 +106,20 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin'
     | '/auction'
+    | '/auction-control'
     | '/dashboard'
     | '/player-registration'
     | '/team-registration'
-    | '/admin/auction'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/admin'
     | '/auction'
+    | '/auction-control'
     | '/dashboard'
     | '/player-registration'
     | '/team-registration'
-    | '/admin/auction'
   id:
     | '__root__'
     | '/'
@@ -127,10 +127,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/admin'
     | '/_authenticated/auction'
+    | '/_authenticated/auction-control'
     | '/_authenticated/dashboard'
     | '/_authenticated/player-registration'
     | '/_authenticated/team-registration'
-    | '/_authenticated/admin/auction'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -183,6 +183,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/auction-control': {
+      id: '/_authenticated/auction-control'
+      path: '/auction-control'
+      fullPath: '/auction-control'
+      preLoaderRoute: typeof AuthenticatedAuctionControlRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/auction': {
       id: '/_authenticated/auction'
       path: '/auction'
@@ -197,38 +204,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/auction': {
-      id: '/_authenticated/admin/auction'
-      path: '/auction'
-      fullPath: '/admin/auction'
-      preLoaderRoute: typeof AuthenticatedAdminAuctionRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
   }
 }
 
-interface AuthenticatedAdminRouteChildren {
-  AuthenticatedAdminAuctionRoute: typeof AuthenticatedAdminAuctionRoute
-}
-
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminAuctionRoute: AuthenticatedAdminAuctionRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAuctionRoute: typeof AuthenticatedAuctionRoute
+  AuthenticatedAuctionControlRoute: typeof AuthenticatedAuctionControlRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPlayerRegistrationRoute: typeof AuthenticatedPlayerRegistrationRoute
   AuthenticatedTeamRegistrationRoute: typeof AuthenticatedTeamRegistrationRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAuctionRoute: AuthenticatedAuctionRoute,
+  AuthenticatedAuctionControlRoute: AuthenticatedAuctionControlRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPlayerRegistrationRoute: AuthenticatedPlayerRegistrationRoute,
   AuthenticatedTeamRegistrationRoute: AuthenticatedTeamRegistrationRoute,

@@ -5,7 +5,7 @@ import { useMyRoles } from "@/lib/use-role";
 import { toast } from "sonner";
 import { ArrowLeft, Gavel, Play, Pause, SkipForward, CheckCircle2, XCircle, Star, RotateCcw, Radio } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/admin/auction")({
+export const Route = createFileRoute("/_authenticated/auction-control")({
   head: () => ({ meta: [{ title: "Auction Control — ESAG" }] }),
   component: AdminAuction,
 });
