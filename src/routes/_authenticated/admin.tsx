@@ -80,7 +80,13 @@ function AdminPage() {
             <h1 className="text-2xl font-bold">Admin console</h1>
             <p className="text-xs text-muted-foreground">Full control of the ESAG auction</p>
           </div>
-        </div>
+          </div>
+          <Link
+            to="/auction-control"
+            className="ml-auto rounded-md bg-gradient-neon px-3 py-1.5 text-xs font-semibold text-primary-foreground shadow-neon-purple"
+          >
+            Open auction control →
+          </Link>
 
         {/* Tabs */}
         <div className="mt-6 inline-flex gap-1 rounded-lg bg-muted p-1">

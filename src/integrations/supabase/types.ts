@@ -293,6 +293,20 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_current_unsold: { Args: never; Returns: undefined }
+      place_bid: { Args: { _amount: number }; Returns: undefined }
+      pre_assign_player: {
+        Args: { _player_id: string; _team_id: string }
+        Returns: undefined
+      }
+      reset_player_assignment: {
+        Args: { _player_id: string }
+        Returns: undefined
+      }
+      sell_current_player: { Args: never; Returns: undefined }
+      set_auction_live: { Args: { _live: boolean }; Returns: undefined }
+      set_current_player: { Args: { _player_id: string }; Returns: undefined }
+      start_next_round: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "team_manager" | "player"

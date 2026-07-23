@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useMyRoles } from "@/lib/use-role";
-import { LogOut, Trophy, User, UsersRound, ShieldCheck } from "lucide-react";
+import { LogOut, Trophy, User, UsersRound, ShieldCheck, Gavel, Radio } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — ESAG Auction" }] }),
@@ -66,10 +66,25 @@ function Dashboard() {
               to="/admin"
               icon={ShieldCheck}
               title="Admin console"
-              body="Manage players, teams, and run the auction."
+              body="Manage players, teams, and settings."
               primary
             />
           )}
+          {isAdmin && (
+            <ActionCard
+              to="/auction-control"
+              icon={Gavel}
+              title="Auction control"
+              body="Run the live auction, sell players, manage rounds."
+              primary
+            />
+          )}
+          <ActionCard
+            to="/auction"
+            icon={Radio}
+            title="Live auction"
+            body="Watch the stream and bid on players in real time."
+          />
           <ActionCard
             to="/player-registration"
             icon={User}
