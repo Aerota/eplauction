@@ -12,6 +12,11 @@ export const Route = createFileRoute("/auth")({
       { name: "description", content: "Sign in as a player, team manager, or admin." },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>): { tab?: Tab } => {
+    const t = search.tab;
+    if (t === "player" || t === "team" || t === "admin") return { tab: t };
+    return {};
+  },
   component: AuthPage,
 });
 
@@ -19,7 +24,8 @@ type Tab = "player" | "team" | "admin";
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<Tab>("player");
+  const search = Route.useSearch();
+  const [tab, setTab] = useState<Tab>(search.tab ?? "player");
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
