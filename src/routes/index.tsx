@@ -47,14 +47,16 @@ function Landing() {
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
           <span className="bg-gradient-neon bg-clip-text text-transparent glow-text">
-            Cricket Auction
+            Where Champions
           </span>
           <br />
-          <span className="text-foreground">Reimagined.</span>
+          <span className="text-foreground">Build Their Teams.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-          AI-graded players. Live bidding. Real-time team dashboards. Everything
-          you need to build your championship squad.
+          Welcome to the official ESAG Cricket Player Auction. An intelligent
+          auction platform that combines AI-driven player analysis, live
+          bidding, and real-time team management to create a fair and exciting
+          squad selection experience.
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link
@@ -87,8 +89,8 @@ function Landing() {
           },
           {
             icon: Users,
-            title: "Round management",
-            body: "Unsold players auto-requeue into rounds 2 and 3 until every squad is complete.",
+            title: "Smart Squad Management",
+            body: "Manage your team's roster throughout the auction. Unsold players automatically return in later rounds until every squad is complete.",
           },
         ].map(({ icon: Icon, title, body }) => (
           <div
