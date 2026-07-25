@@ -52,6 +52,9 @@ function AuthPage() {
           },
         });
         if (error) throw error;
+        if (tab === "player" || tab === "team") {
+          localStorage.setItem("esag_intent", tab);
+        }
         toast.success("Account created! You can sign in now.");
         setMode("login");
       } else {
@@ -71,6 +74,9 @@ function AuthPage() {
           }
         }
 
+        if (tab === "player" || tab === "team") {
+          localStorage.setItem("esag_intent", tab);
+        }
         toast.success("Welcome back!");
         navigate({ to: "/dashboard" });
       }
@@ -82,6 +88,9 @@ function AuthPage() {
   }
 
   async function handleGoogle() {
+    if (tab === "player" || tab === "team") {
+      localStorage.setItem("esag_intent", tab);
+    }
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin + "/dashboard",
     });

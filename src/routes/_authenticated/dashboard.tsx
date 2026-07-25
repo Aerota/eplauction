@@ -13,7 +13,13 @@ function Dashboard() {
   const { roles, userId, email, isAdmin } = useMyRoles();
   const [hasPlayer, setHasPlayer] = useState<boolean | null>(null);
   const [hasTeam, setHasTeam] = useState<boolean | null>(null);
+  const [intent, setIntent] = useState<"player" | "team" | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("esag_intent") : null;
+    if (stored === "player" || stored === "team") setIntent(stored);
+  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -27,8 +33,15 @@ function Dashboard() {
     })();
   }, [userId]);
 
+  // Effective intent: explicit choice, else infer from existing record.
+  const effectiveIntent: "player" | "team" | null =
+    intent ?? (hasPlayer ? "player" : hasTeam ? "team" : null);
+  const showPlayerCard = !isAdmin && effectiveIntent !== "team";
+  const showTeamCard = !isAdmin && effectiveIntent !== "player";
+
   async function signOut() {
     await supabase.auth.signOut();
+    localStorage.removeItem("esag_intent");
     navigate({ to: "/auth" });
   }
 
@@ -85,18 +98,22 @@ function Dashboard() {
             title="Live auction"
             body="Watch the stream and bid on players in real time."
           />
-          <ActionCard
-            to="/player-registration"
-            icon={User}
-            title={hasPlayer ? "View player profile" : "Register as player"}
-            body={hasPlayer ? "You've registered as a player." : "Fill your profile and get AI-graded."}
-          />
-          <ActionCard
-            to="/team-registration"
-            icon={UsersRound}
-            title={hasTeam ? "Manage your team" : "Register a team"}
-            body={hasTeam ? "Manage your squad and bid live." : "Create your team with a name and logo."}
-          />
+          {showPlayerCard && (
+            <ActionCard
+              to="/player-registration"
+              icon={User}
+              title={hasPlayer ? "View player profile" : "Register as player"}
+              body={hasPlayer ? "You've registered as a player." : "Fill your profile and get AI-graded."}
+            />
+          )}
+          {showTeamCard && (
+            <ActionCard
+              to="/team-registration"
+              icon={UsersRound}
+              title={hasTeam ? "Manage your team" : "Register a team"}
+              body={hasTeam ? "Manage your squad and bid live." : "Create your team with a name and logo."}
+            />
+          )}
         </div>
 
         {roles && roles.length === 0 && (
