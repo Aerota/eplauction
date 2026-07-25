@@ -46,7 +46,7 @@ function Landing() {
           Engineering Students' Association Gampaha
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
-          <span className="text-neon-purple glow-text">
+          <span className="text-neon-purple">
             Where Champions
           </span>
           <br />
