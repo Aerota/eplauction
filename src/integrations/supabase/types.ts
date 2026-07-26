@@ -101,6 +101,35 @@ export type Database = {
           },
         ]
       }
+      player_contacts: {
+        Row: {
+          created_at: string
+          email: string | null
+          phone: string | null
+          player_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          phone?: string | null
+          player_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          phone?: string | null
+          player_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "player_contacts_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: true
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       players: {
         Row: {
           achievements: string | null
@@ -115,7 +144,6 @@ export type Database = {
           bowling_style: string | null
           category: Database["public"]["Enums"]["player_category"] | null
           created_at: string
-          email: string | null
           extra_info: string | null
           fitness_level: number | null
           fitness_notes: string | null
@@ -125,7 +153,6 @@ export type Database = {
           id: string
           is_pre_assigned: boolean
           matches_played: number | null
-          phone: string | null
           photo_url: string | null
           primary_role: Database["public"]["Enums"]["player_role"]
           skill_level: number | null
@@ -148,7 +175,6 @@ export type Database = {
           bowling_style?: string | null
           category?: Database["public"]["Enums"]["player_category"] | null
           created_at?: string
-          email?: string | null
           extra_info?: string | null
           fitness_level?: number | null
           fitness_notes?: string | null
@@ -158,7 +184,6 @@ export type Database = {
           id?: string
           is_pre_assigned?: boolean
           matches_played?: number | null
-          phone?: string | null
           photo_url?: string | null
           primary_role?: Database["public"]["Enums"]["player_role"]
           skill_level?: number | null
@@ -181,7 +206,6 @@ export type Database = {
           bowling_style?: string | null
           category?: Database["public"]["Enums"]["player_category"] | null
           created_at?: string
-          email?: string | null
           extra_info?: string | null
           fitness_level?: number | null
           fitness_notes?: string | null
@@ -191,7 +215,6 @@ export type Database = {
           id?: string
           is_pre_assigned?: boolean
           matches_played?: number | null
-          phone?: string | null
           photo_url?: string | null
           primary_role?: Database["public"]["Enums"]["player_role"]
           skill_level?: number | null
