@@ -29,7 +29,7 @@ function Landing() {
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
             <Trophy className="h-5 w-5 text-primary-foreground" />
           </div>
-          <span className="font-bold tracking-tight">ESAG Auction</span>
+          <span className="font-bold tracking-tight">EPL</span>
         </div>
         <Link
           to="/auth"
