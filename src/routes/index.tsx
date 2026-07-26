@@ -24,19 +24,6 @@ export const Route = createFileRoute("/")({
 function Landing() {
   return (
     <div className="min-h-screen">
-      {/* Nav */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="flex items-center gap-2">
-          <img src={logoAsset.url} alt="ESAG Premier League logo" className="h-14 w-14 object-contain" />
-          <span className="font-bold tracking-tight"></span>
-        </div>
-        <Link
-          to="/auth"
-          className="rounded-md bg-gradient-neon px-4 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple hover:opacity-90"
-        >
-          Sign in
-        </Link>
-      </header>
 
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 py-20 text-center">

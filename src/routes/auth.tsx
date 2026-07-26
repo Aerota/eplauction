@@ -106,12 +106,6 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-md">
-        <Link to="/" className="mb-6 flex items-center justify-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
-            <Trophy className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-bold">ESAG Auction</span>
-        </Link>
 
         <div className="rounded-2xl border border-border bg-card/70 p-6 shadow-card backdrop-blur">
           {/* Tabs */}
