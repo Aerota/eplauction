@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Trophy, Users, Zap, Radio } from "lucide-react";
+import { Users, Zap, Radio } from "lucide-react";
+import logoAsset from "@/assets/logo_for_web.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,9 +27,7 @@ function Landing() {
       {/* Nav */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
-            <Trophy className="h-5 w-5 text-primary-foreground" />
-          </div>
+          <img src={logoAsset.url} alt="ESAG Premier League logo" className="h-10 w-10 object-contain" />
           <span className="font-bold tracking-tight"></span>
         </div>
         <Link
