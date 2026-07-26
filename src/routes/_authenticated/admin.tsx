@@ -332,8 +332,9 @@ function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; d
               <Row k="Role" v={d.primary_role?.replace("_", " ")} />
               <Row k="Batting" v={`${d.batting_style || "-"} · Avg ${d.batting_average} · HS ${d.highest_score}`} />
               <Row k="Bowling" v={`${d.bowling_style || "-"} · Avg ${d.bowling_average} · Best ${d.best_bowling || "-"}`} />
-              <Row k="Phone" v={d.phone || "-"} />
-              <Row k="Email" v={d.email || "-"} />
+              <Row k="Phone" v={contact?.phone || "-"} />
+              <Row k="Email" v={contact?.email || "-"} />
+
               <Row k="Fitness notes" v={d.fitness_notes || "-"} />
               <Row k="Achievements" v={d.achievements || "-"} />
               {d.ai_summary && (
