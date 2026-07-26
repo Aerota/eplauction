@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
+import { SiteHeader } from "@/components/SiteHeader";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -136,6 +137,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteHeader />
       <Outlet />
       <Toaster theme="dark" richColors position="top-right" />
     </QueryClientProvider>

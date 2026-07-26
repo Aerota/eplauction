@@ -47,25 +47,6 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-border/60 bg-card/40 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
-              <Trophy className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="font-bold">ESAG Auction</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <span className="hidden text-xs text-muted-foreground sm:inline">{email}</span>
-            <button
-              onClick={signOut}
-              className="inline-flex items-center gap-1 rounded-md border border-border bg-card/60 px-3 py-1.5 text-xs font-medium hover:bg-muted"
-            >
-              <LogOut className="h-3.5 w-3.5" /> Sign out
-            </button>
-          </div>
-        </div>
-      </header>
 
       <main className="mx-auto max-w-6xl px-6 py-10">
         <h1 className="text-3xl font-bold tracking-tight">
