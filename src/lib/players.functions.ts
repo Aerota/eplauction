@@ -76,11 +76,9 @@ export const submitPlayerRegistration = createServerFn({ method: "POST" })
           ? settings?.base_price_b ?? 1
           : settings?.base_price_c ?? 0.5;
 
-    const { error } = await context.supabase.from("players").insert({
+    const { data: inserted, error } = await context.supabase.from("players").insert({
       user_id: context.userId,
       full_name: data.full_name,
-      email: context.claims.email as string | undefined,
-      phone: data.phone || null,
       age: data.age,
       gender: data.gender,
       photo_url: data.photo_url || null,
@@ -102,7 +100,16 @@ export const submitPlayerRegistration = createServerFn({ method: "POST" })
       ai_summary,
       base_price,
       status: "available",
-    });
+    }).select("id").single();
     if (error) throw new Error(error.message);
+
+    // Store contact info in the protected player_contacts table
+    const email = (context.claims.email as string | undefined) ?? null;
+    const phone = data.phone || null;
+    if (inserted?.id && (email || phone)) {
+      await context.supabase
+        .from("player_contacts")
+        .insert({ player_id: inserted.id, email, phone });
+    }
     return { skill_level, fitness_level, category, ai_summary, base_price };
   });

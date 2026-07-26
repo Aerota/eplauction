@@ -284,6 +284,12 @@ function SettingsForm({ settings, onSave }: { settings: any; onSave: (n: any) =>
 }
 
 function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void }) {
+  const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
+  useEffect(() => {
+    if (detail.kind !== "player" || !detail.data?.id) return;
+    supabase.from("player_contacts").select("email, phone").eq("player_id", detail.data.id).maybeSingle()
+      .then(({ data }) => setContact({ email: data?.email ?? null, phone: data?.phone ?? null }));
+  }, [detail]);
   const d = detail.data;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
@@ -326,8 +332,9 @@ function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; d
               <Row k="Role" v={d.primary_role?.replace("_", " ")} />
               <Row k="Batting" v={`${d.batting_style || "-"} · Avg ${d.batting_average} · HS ${d.highest_score}`} />
               <Row k="Bowling" v={`${d.bowling_style || "-"} · Avg ${d.bowling_average} · Best ${d.best_bowling || "-"}`} />
-              <Row k="Phone" v={d.phone || "-"} />
-              <Row k="Email" v={d.email || "-"} />
+              <Row k="Phone" v={contact?.phone || "-"} />
+              <Row k="Email" v={contact?.email || "-"} />
+
               <Row k="Fitness notes" v={d.fitness_notes || "-"} />
               <Row k="Achievements" v={d.achievements || "-"} />
               {d.ai_summary && (
