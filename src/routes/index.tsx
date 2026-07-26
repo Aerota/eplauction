@@ -27,7 +27,7 @@ function Landing() {
       {/* Nav */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2">
-          <img src={logoAsset.url} alt="ESAG Premier League logo" className="h-10 w-10 object-contain" />
+          <img src={logoAsset.url} alt="ESAG Premier League logo" className="h-14 w-14 object-contain" />
           <span className="font-bold tracking-tight"></span>
         </div>
         <Link
