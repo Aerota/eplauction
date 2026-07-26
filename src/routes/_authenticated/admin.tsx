@@ -284,6 +284,12 @@ function SettingsForm({ settings, onSave }: { settings: any; onSave: (n: any) =>
 }
 
 function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void }) {
+  const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
+  useEffect(() => {
+    if (detail.kind !== "player" || !detail.data?.id) return;
+    supabase.from("player_contacts").select("email, phone").eq("player_id", detail.data.id).maybeSingle()
+      .then(({ data }) => setContact({ email: data?.email ?? null, phone: data?.phone ?? null }));
+  }, [detail]);
   const d = detail.data;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
