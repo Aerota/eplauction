@@ -2,7 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import logoAsset from "@/assets/logo_for_web.png";
+import logoAsset from "@/assets/logo_for_web.png.asset.json";
 
 export function SiteHeader() {
   const [email, setEmail] = useState<string | null>(null);
@@ -39,9 +39,9 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2">
           <img
-            src="assets/logo_for_web.png.asset.json"
-            alt="ESAG"
-            className="h-12 w-12 object-contain"
+            src={logoAsset.url}
+            alt="ESAG Premier League logo"
+            className="h-12 w-auto object-contain"
           />
           <span className="font-bold tracking-tight" />
         </Link>
