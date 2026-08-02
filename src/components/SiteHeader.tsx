@@ -2,7 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import logoAsset from "@/assets/logo_for_web.png.asset.json";
+import logoAsset from "@/assets/logo_for_web.png";
 
 export function SiteHeader() {
   const [email, setEmail] = useState<string | null>(null);
