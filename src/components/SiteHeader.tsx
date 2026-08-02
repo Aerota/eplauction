@@ -39,7 +39,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2">
           <img
-            src="@/assets/logo_for_web.png"
+            src="assets/logo_for_web.png"
             alt="ESAG Premier League logo"
             className="h-12 w-12 object-contain"
           />
