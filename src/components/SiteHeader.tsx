@@ -40,7 +40,7 @@ export function SiteHeader() {
         <Link to="/" className="flex items-center gap-2">
           <img
             src="assets/logo_for_web.png"
-            alt="ESAG Premier League logo"
+            alt="ESAG"
             className="h-12 w-12 object-contain"
           />
           <span className="font-bold tracking-tight" />
