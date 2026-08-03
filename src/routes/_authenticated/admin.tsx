@@ -90,7 +90,7 @@ function AdminPage() {
 
         {/* Tabs */}
         <div className="mt-6 inline-flex gap-1 rounded-lg bg-muted p-1">
-          {(["players", "teams", "settings"] as const).map((t) => (
+          {(["players", "teams", "matches", "settings"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
