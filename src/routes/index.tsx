@@ -100,3 +100,41 @@ function Landing() {
     </div>
   );
 }
+
+function MatchesSnapshot() {
+  const { live, upcoming, loading } = useMatches();
+  const shown = [...live, ...upcoming].slice(0, 3);
+
+  return (
+    <section className="mx-auto max-w-6xl px-6 pb-8">
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">
+            {live.length > 0 ? "Live & upcoming matches" : "Upcoming matches"}
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Scores, fixtures and the official live stream — updated in real time.
+          </p>
+        </div>
+        <Link
+          to="/matches"
+          className="inline-flex items-center gap-1 rounded-lg border border-border bg-card/60 px-4 py-2 text-sm font-semibold backdrop-blur hover:bg-muted"
+        >
+          All matches & live stream <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+
+      {shown.length === 0 ? (
+        <p className="rounded-2xl border border-border bg-card/40 p-8 text-center text-sm text-muted-foreground">
+          {loading ? "Loading matches…" : "No matches scheduled yet — check back soon."}
+        </p>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((m) => (
+            <MatchCard key={m.id} match={m} compact />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
