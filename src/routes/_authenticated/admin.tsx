@@ -17,7 +17,7 @@ function AdminPage() {
   const [teams, setTeams] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
-  const [tab, setTab] = useState<"players" | "teams" | "settings">("players");
+  const [tab, setTab] = useState<"players" | "teams" | "matches" | "settings">("players");
 
   useEffect(() => {
     if (roles && !isAdmin) navigate({ to: "/dashboard" });
