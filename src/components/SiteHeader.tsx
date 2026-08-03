@@ -68,7 +68,7 @@ export function SiteHeader() {
             !onAuthPage && (
               <Link
                 to="/auth"
-                className="rounded-md bg-gradient-neon px-4 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple hover:opacity-90"
+                className="rounded-md bg-gradient-neon px-4 py-2 text-sm font-semibold text-primary-foreground  hover:opacity-90"
               >
                 Sign in
               </Link>
