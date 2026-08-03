@@ -5,7 +5,7 @@ import logoAsset from "@/assets/logo_for_web.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ESAG Cricket Auction — Live Player Bidding" },
+      { title: "ESAG Premier League" },
       {
         name: "description",
         content:
