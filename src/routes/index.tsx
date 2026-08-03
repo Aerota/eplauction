@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, Zap, Radio } from "lucide-react";
+import { Users, Zap, Radio, ArrowRight } from "lucide-react";
 import logoAsset from "@/assets/logo_for_web.png.asset.json";
+import { useMatches } from "@/lib/use-matches";
+import { MatchCard } from "@/components/MatchCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
