@@ -49,6 +49,7 @@ function Landing() {
             to="/auth"
             className="rounded-lg bg-gradient-neon px-6 py-3 font-semibold text-primary-foreground shadow-neon-purple"
           >
+            <span className="h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
             Watch Live
           </Link>
           <Link
