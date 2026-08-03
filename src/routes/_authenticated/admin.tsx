@@ -217,6 +217,8 @@ function AdminPage() {
           </div>
         )}
 
+        {tab === "matches" && <MatchesAdmin />}
+
         {tab === "settings" && settings && (
           <div className="mt-6 rounded-2xl border border-border bg-card/60 p-6">
             <h3 className="text-sm font-semibold text-neon-blue">Auction settings</h3>
