@@ -46,6 +46,13 @@ export function SiteHeader() {
           <span className="font-bold tracking-tight" />
         </Link>
         <div className="flex items-center gap-3">
+          <Link
+            to="/matches"
+            activeProps={{ className: "text-foreground" }}
+            className="rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground"
+          >
+            Matches
+          </Link>
           {ready && email ? (
             <>
               <Link
