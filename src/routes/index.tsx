@@ -47,9 +47,9 @@ function Landing() {
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link
             to="/auth"
-            className="rounded-lg bg-gradient-neon px-6 py-3 font-semibold text-primary-foreground shadow-neon-purple"
+            className="rounded-lg bg-gradient-neon px-6 py-3 font-semibold text-primary-foreground "
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-black animate-pulse" />
             Watch Live
           </Link>
           <Link
