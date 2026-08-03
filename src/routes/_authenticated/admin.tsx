@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useMyRoles } from "@/lib/use-role";
 import { toast } from "sonner";
+import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
