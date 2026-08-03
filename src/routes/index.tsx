@@ -63,6 +63,9 @@ function Landing() {
         </div>
       </section>
 
+      <MatchesSnapshot />
+
+
       {/* Features */}
       <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 sm:grid-cols-3">
         {[
