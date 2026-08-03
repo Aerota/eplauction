@@ -49,14 +49,13 @@ function Landing() {
             to="/auth"
             className="rounded-lg bg-gradient-neon px-6 py-3 font-semibold text-primary-foreground shadow-neon-purple"
           >
-            Get started
+            Watch Live
           </Link>
           <Link
             to="/auth"
-            search={{ tab: "team" }}
             className="rounded-lg border border-border bg-card/60 px-6 py-3 font-semibold backdrop-blur"
           >
-            Team login
+            Get started
           </Link>
         </div>
       </section>
