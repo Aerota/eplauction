@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useMyRoles } from "@/lib/use-role";
 import { toast } from "sonner";
+import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -17,7 +18,7 @@ function AdminPage() {
   const [teams, setTeams] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
-  const [tab, setTab] = useState<"players" | "teams" | "settings">("players");
+  const [tab, setTab] = useState<"players" | "teams" | "matches" | "settings">("players");
 
   useEffect(() => {
     if (roles && !isAdmin) navigate({ to: "/dashboard" });
@@ -90,7 +91,7 @@ function AdminPage() {
 
         {/* Tabs */}
         <div className="mt-6 inline-flex gap-1 rounded-lg bg-muted p-1">
-          {(["players", "teams", "settings"] as const).map((t) => (
+          {(["players", "teams", "matches", "settings"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -216,6 +217,8 @@ function AdminPage() {
             </div>
           </div>
         )}
+
+        {tab === "matches" && <MatchesAdmin />}
 
         {tab === "settings" && settings && (
           <div className="mt-6 rounded-2xl border border-border bg-card/60 p-6">

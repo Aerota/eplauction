@@ -101,6 +101,84 @@ export type Database = {
           },
         ]
       }
+      matches: {
+        Row: {
+          batting_team: string | null
+          commentary: string | null
+          created_at: string
+          current_innings: number
+          id: string
+          is_featured: boolean
+          match_date: string | null
+          result_summary: string | null
+          status: Database["public"]["Enums"]["match_status"]
+          team_a_logo_url: string | null
+          team_a_name: string
+          team_a_overs: number
+          team_a_score: number
+          team_a_wickets: number
+          team_b_logo_url: string | null
+          team_b_name: string
+          team_b_overs: number
+          team_b_score: number
+          team_b_wickets: number
+          toss_info: string | null
+          updated_at: string
+          venue: string | null
+          youtube_url: string | null
+        }
+        Insert: {
+          batting_team?: string | null
+          commentary?: string | null
+          created_at?: string
+          current_innings?: number
+          id?: string
+          is_featured?: boolean
+          match_date?: string | null
+          result_summary?: string | null
+          status?: Database["public"]["Enums"]["match_status"]
+          team_a_logo_url?: string | null
+          team_a_name: string
+          team_a_overs?: number
+          team_a_score?: number
+          team_a_wickets?: number
+          team_b_logo_url?: string | null
+          team_b_name: string
+          team_b_overs?: number
+          team_b_score?: number
+          team_b_wickets?: number
+          toss_info?: string | null
+          updated_at?: string
+          venue?: string | null
+          youtube_url?: string | null
+        }
+        Update: {
+          batting_team?: string | null
+          commentary?: string | null
+          created_at?: string
+          current_innings?: number
+          id?: string
+          is_featured?: boolean
+          match_date?: string | null
+          result_summary?: string | null
+          status?: Database["public"]["Enums"]["match_status"]
+          team_a_logo_url?: string | null
+          team_a_name?: string
+          team_a_overs?: number
+          team_a_score?: number
+          team_a_wickets?: number
+          team_b_logo_url?: string | null
+          team_b_name?: string
+          team_b_overs?: number
+          team_b_score?: number
+          team_b_wickets?: number
+          toss_info?: string | null
+          updated_at?: string
+          venue?: string | null
+          youtube_url?: string | null
+        }
+        Relationships: []
+      }
       player_contacts: {
         Row: {
           created_at: string
@@ -333,6 +411,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "team_manager" | "player"
+      match_status: "upcoming" | "live" | "completed"
       player_category: "A" | "B" | "C"
       player_gender: "male" | "female"
       player_role: "batsman" | "bowler" | "all_rounder" | "wicket_keeper"
@@ -470,6 +549,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "team_manager", "player"],
+      match_status: ["upcoming", "live", "completed"],
       player_category: ["A", "B", "C"],
       player_gender: ["male", "female"],
       player_role: ["batsman", "bowler", "all_rounder", "wicket_keeper"],
