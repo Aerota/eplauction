@@ -14,7 +14,11 @@ export function LiveDot() {
 export function MatchCard({ match, compact = false }: { match: Match; compact?: boolean }) {
   const isLive = match.status === "live";
   return (
-    <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur shadow-card">
+    <Link
+      to="/match/$matchId"
+      params={{ matchId: match.id }}
+      className="block rounded-2xl border border-border bg-card/60 p-5 backdrop-blur shadow-card transition hover:border-neon-blue/60"
+    >
       <div className="flex items-center justify-between gap-2">
         {isLive ? (
           <LiveDot />
