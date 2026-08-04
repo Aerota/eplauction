@@ -136,8 +136,10 @@ function MatchesSnapshot() {
           ))}
         </div>
       )}
-        <div style="margin-top: 10px; margin-bottom: 15px;">
+        <div>
+          
           <h2 className="text-2xl font-bold tracking-tight">
+            <br />
             Our Sponsors
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
