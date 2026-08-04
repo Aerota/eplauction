@@ -98,7 +98,7 @@ function Landing() {
         ))}
       </section>
       */}
-      <section>
+      <section className="mx-auto">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
             Our Sponsors
