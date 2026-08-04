@@ -135,7 +135,7 @@ function MatchesSnapshot() {
           ))}
         </div>
       )}
-      <div>  <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"> </div>
+      <div>  <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img> </div>
     </section>
   );
 }
