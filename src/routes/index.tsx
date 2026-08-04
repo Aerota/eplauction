@@ -34,11 +34,11 @@ function Landing() {
           Engineering Students' Association Gampaha
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
+          <span className="text-foreground">ESAG</span>
+           <br />
           <span className="text-neon-purple">
-            Where Champions
+            Premier League
           </span>
-          <br />
-          <span className="text-foreground">Build Their Teams.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
           Welcome to the official ESAG Cricket Player Auction. An intelligent
