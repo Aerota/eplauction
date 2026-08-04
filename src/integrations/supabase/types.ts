@@ -101,12 +101,60 @@ export type Database = {
           },
         ]
       }
+      match_events: {
+        Row: {
+          ball_number: number
+          created_at: string
+          description: string | null
+          event_type: string
+          id: string
+          innings: number
+          match_id: string
+          over_number: number
+          runs: number
+          team_name: string | null
+        }
+        Insert: {
+          ball_number?: number
+          created_at?: string
+          description?: string | null
+          event_type?: string
+          id?: string
+          innings?: number
+          match_id: string
+          over_number?: number
+          runs?: number
+          team_name?: string | null
+        }
+        Update: {
+          ball_number?: number
+          created_at?: string
+          description?: string | null
+          event_type?: string
+          id?: string
+          innings?: number
+          match_id?: string
+          over_number?: number
+          runs?: number
+          team_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_events_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       matches: {
         Row: {
           batting_team: string | null
           commentary: string | null
           created_at: string
           current_innings: number
+          highlight_url: string | null
           id: string
           is_featured: boolean
           match_date: string | null
@@ -122,7 +170,9 @@ export type Database = {
           team_b_overs: number
           team_b_score: number
           team_b_wickets: number
+          toss_decision: string | null
           toss_info: string | null
+          toss_winner: string | null
           updated_at: string
           venue: string | null
           youtube_url: string | null
@@ -132,6 +182,7 @@ export type Database = {
           commentary?: string | null
           created_at?: string
           current_innings?: number
+          highlight_url?: string | null
           id?: string
           is_featured?: boolean
           match_date?: string | null
@@ -147,7 +198,9 @@ export type Database = {
           team_b_overs?: number
           team_b_score?: number
           team_b_wickets?: number
+          toss_decision?: string | null
           toss_info?: string | null
+          toss_winner?: string | null
           updated_at?: string
           venue?: string | null
           youtube_url?: string | null
@@ -157,6 +210,7 @@ export type Database = {
           commentary?: string | null
           created_at?: string
           current_innings?: number
+          highlight_url?: string | null
           id?: string
           is_featured?: boolean
           match_date?: string | null
@@ -172,7 +226,9 @@ export type Database = {
           team_b_overs?: number
           team_b_score?: number
           team_b_wickets?: number
+          toss_decision?: string | null
           toss_info?: string | null
+          toss_winner?: string | null
           updated_at?: string
           venue?: string | null
           youtube_url?: string | null

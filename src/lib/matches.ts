@@ -1,6 +1,32 @@
 import type { Database } from "@/integrations/supabase/types";
 
 export type Match = Database["public"]["Tables"]["matches"]["Row"];
+export type MatchEvent = Database["public"]["Tables"]["match_events"]["Row"];
+
+export const EVENT_TYPES = ["run", "four", "six", "wicket", "wide", "no_ball", "bye", "note"] as const;
+export type EventType = (typeof EVENT_TYPES)[number];
+
+export const EVENT_LABELS: Record<string, string> = {
+  run: "Runs",
+  four: "FOUR",
+  six: "SIX",
+  wicket: "WICKET",
+  wide: "Wide",
+  no_ball: "No ball",
+  bye: "Bye",
+  note: "Note",
+};
+
+export function ballLabel(over: number, ball: number) {
+  return `${over}.${ball}`;
+}
+
+export function tossLine(match: Pick<Match, "toss_winner" | "toss_decision" | "toss_info">) {
+  if (match.toss_winner && match.toss_decision) {
+    return `${match.toss_winner} won the toss and chose to ${match.toss_decision}`;
+  }
+  return match.toss_info ?? null;
+}
 
 /** Convert any YouTube URL (watch, youtu.be, live, embed) into an embeddable URL. */
 export function youtubeEmbedUrl(url: string | null | undefined): string | null {
