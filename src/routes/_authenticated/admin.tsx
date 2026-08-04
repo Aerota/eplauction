@@ -186,9 +186,9 @@ function AdminPage() {
                 >
                   <div className="flex items-center gap-3">
                     {t.logo_url ? (
-                      <img src={t.logo_url} alt="" className="h-12 w-12 rounded-lg object-cover shadow-neon-purple" />
+                      <img src={t.logo_url} alt="" className="h-12 w-12 rounded-lg object-cover " />
                     ) : (
-                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-neon ">
                         <UsersRound className="h-6 w-6 text-primary-foreground" />
                       </div>
                     )}
