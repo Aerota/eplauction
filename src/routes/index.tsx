@@ -143,9 +143,12 @@ function MatchesSnapshot() {
             Our Sponsors
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
+            
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
           </p>
            <div> 
-             <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img>
+             {/* <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img> */}
            </div>
         </div>
     </section>
