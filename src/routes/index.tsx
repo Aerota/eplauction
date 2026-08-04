@@ -98,18 +98,6 @@ function Landing() {
         ))}
       </section>
       */}
-      <section className="mx-auto">
-        <div>
-          <h2 className="text-2xl font-bold tracking-tight">
-            Our Sponsors
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-          </p>
-           <div> 
-             <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img>
-           </div>
-        </div>
-      </section>
     </div>
   );
 }
@@ -148,7 +136,16 @@ function MatchesSnapshot() {
           ))}
         </div>
       )}
-     
+        <div style="margin-top: 10px; margin-bottom: 15px;">
+          <h2 className="text-2xl font-bold tracking-tight">
+            Our Sponsors
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+          </p>
+           <div> 
+             <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img>
+           </div>
+        </div>
     </section>
   );
 }
