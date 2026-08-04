@@ -94,8 +94,6 @@ function Landing() {
             </div>
             <h3 className="font-semibold">{title}</h3>
             <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-
-            <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"> </img>
           </div>
         ))}
       </section>
