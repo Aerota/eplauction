@@ -14,6 +14,7 @@ export function LiveDot() {
 
 export function MatchCard({ match, compact = false }: { match: Match; compact?: boolean }) {
   const isLive = match.status === "live";
+  const { logoFor } = useTeamLogos();
   return (
     <Link
       to="/match/$matchId"
