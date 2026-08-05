@@ -55,6 +55,14 @@ function AdminPage() {
     refresh();
   }
 
+  async function saveTeam(id: string, values: { team_name: string; manager_name: string; logo_url: string | null; budget_remaining: number }) {
+    const { error } = await supabase.from("teams").update(values).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Team updated");
+    setEditTeam(null);
+    refresh();
+  }
+
   async function saveSettings(next: Partial<typeof settings>) {
     const { error } = await supabase
       .from("auction_settings")
