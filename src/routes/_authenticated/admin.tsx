@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useMyRoles } from "@/lib/use-role";
 import { toast } from "sonner";
 import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
-import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles, Pencil } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin Console — ESAG Auction" }] }),
@@ -18,6 +18,7 @@ function AdminPage() {
   const [teams, setTeams] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
+  const [editTeam, setEditTeam] = useState<any | null>(null);
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "settings">("players");
 
   useEffect(() => {
@@ -51,6 +52,14 @@ function AdminPage() {
     const { error } = await supabase.from("teams").delete().eq("id", id);
     if (error) return toast.error(error.message);
     toast.success("Team deleted");
+    refresh();
+  }
+
+  async function saveTeam(id: string, values: { team_name: string; manager_name: string; logo_url: string | null; budget_remaining: number }) {
+    const { error } = await supabase.from("teams").update(values).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Team updated");
+    setEditTeam(null);
     refresh();
   }
 
@@ -197,6 +206,13 @@ function AdminPage() {
                       <div className="text-xs text-muted-foreground">Mgr: {t.manager_name}</div>
                     </div>
                     <button
+                      onClick={(e) => { e.stopPropagation(); setEditTeam(t); }}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                      aria-label={`Edit ${t.team_name}`}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                    <button
                       onClick={(e) => { e.stopPropagation(); deleteTeam(t.id, t.team_name); }}
                       className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
                     >
@@ -231,7 +247,96 @@ function AdminPage() {
         )}
       </div>
 
-      {detail && <DetailModal detail={detail} onClose={() => setDetail(null)} />}
+      {detail && (
+        <DetailModal
+          detail={detail}
+          onClose={() => setDetail(null)}
+          onEdit={detail.kind === "team" ? () => { setEditTeam(detail.data); setDetail(null); } : undefined}
+        />
+      )}
+      {editTeam && (
+        <EditTeamModal team={editTeam} onClose={() => setEditTeam(null)} onSave={saveTeam} />
+      )}
+    </div>
+  );
+}
+
+function EditTeamModal({
+  team,
+  onClose,
+  onSave,
+}: {
+  team: any;
+  onClose: () => void;
+  onSave: (id: string, values: { team_name: string; manager_name: string; logo_url: string | null; budget_remaining: number }) => void;
+}) {
+  const [form, setForm] = useState({
+    team_name: team.team_name ?? "",
+    manager_name: team.manager_name ?? "",
+    logo_url: team.logo_url ?? "",
+    budget_remaining: String(team.budget_remaining ?? 0),
+  });
+  const [saving, setSaving] = useState(false);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
+      <form
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!form.team_name.trim() || !form.manager_name.trim()) return toast.error("Team and manager name are required");
+          setSaving(true);
+          onSave(team.id, {
+            team_name: form.team_name.trim(),
+            manager_name: form.manager_name.trim(),
+            logo_url: form.logo_url.trim() || null,
+            budget_remaining: Number(form.budget_remaining) || 0,
+          });
+          setSaving(false);
+        }}
+        className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-neon-purple"
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-lg font-bold">Edit team</h2>
+            <p className="text-xs text-muted-foreground">Update team details and budget</p>
+          </div>
+          <button type="button" onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+        </div>
+
+        <div className="mt-5 space-y-4">
+          {([
+            ["team_name", "Team name", "text"],
+            ["manager_name", "Manager name", "text"],
+            ["logo_url", "Logo URL", "text"],
+            ["budget_remaining", "Budget remaining (M)", "number"],
+          ] as const).map(([key, label, type]) => (
+            <div key={key}>
+              <label className="mb-1 block text-xs font-medium">{label}</label>
+              <input
+                type={type}
+                step={type === "number" ? "0.1" : undefined}
+                value={form[key]}
+                onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          ))}
+          {form.logo_url && (
+            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover neon-ring" />
+          )}
+        </div>
+
+        <div className="mt-6 flex justify-end gap-2">
+          <button type="button" onClick={onClose} className="rounded-md border border-border px-4 py-2 text-sm">Cancel</button>
+          <button
+            disabled={saving}
+            className="rounded-md bg-gradient-neon px-5 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple disabled:opacity-60"
+          >
+            Save changes
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
@@ -286,7 +391,7 @@ function SettingsForm({ settings, onSave }: { settings: any; onSave: (n: any) =>
   );
 }
 
-function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void }) {
+function DetailModal({ detail, onClose, onEdit }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void; onEdit?: () => void }) {
   const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
   useEffect(() => {
     if (detail.kind !== "player" || !detail.data?.id) return;
@@ -318,7 +423,12 @@ function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; d
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+          <div className="flex items-center gap-1">
+            {onEdit && (
+              <button onClick={onEdit} className="rounded-md p-1 hover:bg-muted" aria-label="Edit team"><Pencil className="h-4 w-4" /></button>
+            )}
+            <button onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+          </div>
         </div>
 
         <div className="mt-6 space-y-3 text-sm">
