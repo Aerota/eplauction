@@ -247,7 +247,96 @@ function AdminPage() {
         )}
       </div>
 
-      {detail && <DetailModal detail={detail} onClose={() => setDetail(null)} />}
+      {detail && (
+        <DetailModal
+          detail={detail}
+          onClose={() => setDetail(null)}
+          onEdit={detail.kind === "team" ? () => { setEditTeam(detail.data); setDetail(null); } : undefined}
+        />
+      )}
+      {editTeam && (
+        <EditTeamModal team={editTeam} onClose={() => setEditTeam(null)} onSave={saveTeam} />
+      )}
+    </div>
+  );
+}
+
+function EditTeamModal({
+  team,
+  onClose,
+  onSave,
+}: {
+  team: any;
+  onClose: () => void;
+  onSave: (id: string, values: { team_name: string; manager_name: string; logo_url: string | null; budget_remaining: number }) => void;
+}) {
+  const [form, setForm] = useState({
+    team_name: team.team_name ?? "",
+    manager_name: team.manager_name ?? "",
+    logo_url: team.logo_url ?? "",
+    budget_remaining: String(team.budget_remaining ?? 0),
+  });
+  const [saving, setSaving] = useState(false);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
+      <form
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!form.team_name.trim() || !form.manager_name.trim()) return toast.error("Team and manager name are required");
+          setSaving(true);
+          onSave(team.id, {
+            team_name: form.team_name.trim(),
+            manager_name: form.manager_name.trim(),
+            logo_url: form.logo_url.trim() || null,
+            budget_remaining: Number(form.budget_remaining) || 0,
+          });
+          setSaving(false);
+        }}
+        className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-neon-purple"
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-lg font-bold">Edit team</h2>
+            <p className="text-xs text-muted-foreground">Update team details and budget</p>
+          </div>
+          <button type="button" onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+        </div>
+
+        <div className="mt-5 space-y-4">
+          {([
+            ["team_name", "Team name", "text"],
+            ["manager_name", "Manager name", "text"],
+            ["logo_url", "Logo URL", "text"],
+            ["budget_remaining", "Budget remaining (M)", "number"],
+          ] as const).map(([key, label, type]) => (
+            <div key={key}>
+              <label className="mb-1 block text-xs font-medium">{label}</label>
+              <input
+                type={type}
+                step={type === "number" ? "0.1" : undefined}
+                value={form[key]}
+                onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          ))}
+          {form.logo_url && (
+            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover neon-ring" />
+          )}
+        </div>
+
+        <div className="mt-6 flex justify-end gap-2">
+          <button type="button" onClick={onClose} className="rounded-md border border-border px-4 py-2 text-sm">Cancel</button>
+          <button
+            disabled={saving}
+            className="rounded-md bg-gradient-neon px-5 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple disabled:opacity-60"
+          >
+            Save changes
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
