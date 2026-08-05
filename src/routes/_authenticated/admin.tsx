@@ -423,7 +423,12 @@ function DetailModal({ detail, onClose, onEdit }: { detail: { kind: "player" | "
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+          <div className="flex items-center gap-1">
+            {onEdit && (
+              <button onClick={onEdit} className="rounded-md p-1 hover:bg-muted" aria-label="Edit team"><Pencil className="h-4 w-4" /></button>
+            )}
+            <button onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+          </div>
         </div>
 
         <div className="mt-6 space-y-3 text-sm">
