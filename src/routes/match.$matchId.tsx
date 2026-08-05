@@ -3,7 +3,7 @@ import { ArrowLeft, Radio, MapPin, CalendarDays, Film } from "lucide-react";
 import { useMatch } from "@/lib/use-match";
 import { useMatchEvents } from "@/lib/use-match-events";
 import { youtubeEmbedUrl, formatMatchDate, tossLine, EVENT_LABELS, ballLabel } from "@/lib/matches";
-import { LiveDot } from "@/components/MatchCard";
+import { LiveDot, TeamLogo } from "@/components/MatchCard";
 
 export const Route = createFileRoute("/match/$matchId")({
   head: () => ({
@@ -169,33 +169,13 @@ function MatchDetailPage() {
   );
 }
 
-function TeamScore({
-  name,
-  runs,
-  wickets,
-  overs,
-  batting,
-  upcoming,
-}: {
-  name: string;
-  runs: number;
-  wickets: number;
-  overs: number | string;
-  batting?: boolean;
-  upcoming?: boolean;
-}) {
+function TeamSide({ name, logo, batting }: { name: string; logo: string | null; batting?: boolean }) {
   return (
-    <div className={`rounded-xl border p-4 ${batting ? "border-neon-blue/60 bg-gradient-neon-soft" : "border-border bg-muted/30"}`}>
-      <div className="flex items-center gap-2 text-sm font-semibold">
-        {name} {batting && <span className="text-neon-blue">•</span>}
-      </div>
-      <div className="mt-2 text-3xl font-extrabold tabular-nums">
-        {upcoming ? "—" : (
-          <>
-            {runs}/{wickets} <span className="text-sm font-medium text-muted-foreground">({overs} ov)</span>
-          </>
-        )}
-      </div>
+    <div className="flex w-24 flex-col items-center gap-2 text-center sm:w-32">
+      <TeamLogo name={name} logo={logo} size="lg" />
+      <span className={`text-xs font-semibold sm:text-sm ${batting ? "text-neon-blue" : "text-foreground"}`}>
+        {name}
+      </span>
     </div>
   );
 }
