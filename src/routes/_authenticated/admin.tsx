@@ -18,6 +18,7 @@ function AdminPage() {
   const [teams, setTeams] = useState<any[]>([]);
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
+  const [editTeam, setEditTeam] = useState<any | null>(null);
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "settings">("players");
 
   useEffect(() => {
