@@ -4,6 +4,7 @@ import { useMatch } from "@/lib/use-match";
 import { useMatchEvents } from "@/lib/use-match-events";
 import { youtubeEmbedUrl, formatMatchDate, tossLine, EVENT_LABELS, ballLabel } from "@/lib/matches";
 import { LiveDot, TeamLogo } from "@/components/MatchCard";
+import { useTeamLogos } from "@/lib/use-team-logos";
 
 export const Route = createFileRoute("/match/$matchId")({
   head: () => ({
@@ -27,6 +28,7 @@ function MatchDetailPage() {
   const { matchId } = Route.useParams();
   const { match, loading } = useMatch(matchId);
   const { events } = useMatchEvents(matchId);
+  const { logoFor } = useTeamLogos();
 
   if (loading) return <p className="mx-auto max-w-5xl px-6 py-16 text-sm text-muted-foreground">Loading match…</p>;
   if (!match)
