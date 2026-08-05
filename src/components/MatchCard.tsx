@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Radio, CalendarDays, MapPin } from "lucide-react";
 import type { Match } from "@/lib/matches";
 import { formatMatchDate, scoreLine } from "@/lib/matches";
+import { useTeamLogos } from "@/lib/use-team-logos";
 
 export function LiveDot() {
   return (
