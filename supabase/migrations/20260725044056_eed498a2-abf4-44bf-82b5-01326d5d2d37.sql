@@ -26,16 +26,12 @@ REVOKE SELECT ON public.bids FROM anon;
 --DROP POLICY IF EXISTS "Anyone can view teams" ON public.teams;
 --REVOKE SELECT ON public.teams FROM anon;
 
--- 5. profiles: restrict to own row or admin
---DROP POLICY IF EXISTS "Profiles are viewable by authenticated" ON public.profiles;
---CREATE POLICY "Users can view own profile" ON public.profiles
---  FOR SELECT TO authenticated
---  USING (auth.uid() = id OR public.has_role(auth.uid(), 'admin'));
+--5. profiles: restrict to own row or admin
+DROP POLICY IF EXISTS "Profiles are viewable by authenticated" ON public.profiles;
+CREATE POLICY "Users can view own profile" ON public.profiles
+ FOR SELECT TO authenticated
+ USING (auth.uid() = id OR public.has_role(auth.uid(), 'admin'));
 
-GRANT SELECT ON public.teams TO anon;
-
-CREATE POLICY "Anyone can view teams" ON public.teams
-  FOR SELECT TO anon USING (true);
 
 -- 6. Revoke EXECUTE on SECURITY DEFINER functions from anon / PUBLIC.
 --    Admin-only functions still self-check via has_role; authenticated
