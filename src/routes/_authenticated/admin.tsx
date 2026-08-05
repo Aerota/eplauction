@@ -206,6 +206,13 @@ function AdminPage() {
                       <div className="text-xs text-muted-foreground">Mgr: {t.manager_name}</div>
                     </div>
                     <button
+                      onClick={(e) => { e.stopPropagation(); setEditTeam(t); }}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                      aria-label={`Edit ${t.team_name}`}
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                    <button
                       onClick={(e) => { e.stopPropagation(); deleteTeam(t.id, t.team_name); }}
                       className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
                     >
