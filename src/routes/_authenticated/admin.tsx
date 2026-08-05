@@ -391,7 +391,7 @@ function SettingsForm({ settings, onSave }: { settings: any; onSave: (n: any) =>
   );
 }
 
-function DetailModal({ detail, onClose }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void }) {
+function DetailModal({ detail, onClose, onEdit }: { detail: { kind: "player" | "team"; data: any }; onClose: () => void; onEdit?: () => void }) {
   const [contact, setContact] = useState<{ email: string | null; phone: string | null } | null>(null);
   useEffect(() => {
     if (detail.kind !== "player" || !detail.data?.id) return;
