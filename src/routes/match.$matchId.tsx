@@ -4,6 +4,7 @@ import { useMatch } from "@/lib/use-match";
 import { useMatchEvents } from "@/lib/use-match-events";
 import { youtubeEmbedUrl, formatMatchDate, tossLine, EVENT_LABELS, ballLabel } from "@/lib/matches";
 import { LiveDot, TeamLogo } from "@/components/MatchCard";
+import { useTeamLogos } from "@/lib/use-team-logos";
 
 export const Route = createFileRoute("/match/$matchId")({
   head: () => ({
@@ -27,6 +28,7 @@ function MatchDetailPage() {
   const { matchId } = Route.useParams();
   const { match, loading } = useMatch(matchId);
   const { events } = useMatchEvents(matchId);
+  const { logoFor } = useTeamLogos();
 
   if (loading) return <p className="mx-auto max-w-5xl px-6 py-16 text-sm text-muted-foreground">Loading match…</p>;
   if (!match)
@@ -72,7 +74,7 @@ function MatchDetailPage() {
         </div>
 
         <div className="mt-6 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
-          <TeamSide name={match.team_a_name} logo={match.team_a_logo_url} batting={isLive && match.batting_team === match.team_a_name} />
+          <TeamSide name={match.team_a_name} logo={logoFor(match.team_a_name, match.team_a_logo_url)} batting={isLive && match.batting_team === match.team_a_name} />
           <div className="text-center">
             {match.status === "upcoming" ? (
               <div className="text-sm font-semibold text-muted-foreground">Match yet to begin</div>
@@ -90,7 +92,7 @@ function MatchDetailPage() {
               </div>
             )}
           </div>
-          <TeamSide name={match.team_b_name} logo={match.team_b_logo_url} batting={isLive && match.batting_team === match.team_b_name} />
+          <TeamSide name={match.team_b_name} logo={logoFor(match.team_b_name, match.team_b_logo_url)} batting={isLive && match.batting_team === match.team_b_name} />
         </div>
 
         <div className="mt-4 space-y-1 text-center">
