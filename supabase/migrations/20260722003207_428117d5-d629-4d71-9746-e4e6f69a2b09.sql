@@ -77,7 +77,7 @@ GRANT SELECT ON public.teams TO authenticated, anon;
 GRANT INSERT, UPDATE ON public.teams TO authenticated;
 GRANT ALL ON public.teams TO service_role;
 ALTER TABLE public.teams ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Anyone can view teams" ON public.teams FOR SELECT USING (true);
+CREATE POLICY "Anyone can view teams" ON public.teams FOR SELECT TO anon USING (true);
 CREATE POLICY "Managers can insert own team" ON public.teams FOR INSERT TO authenticated WITH CHECK (auth.uid() = manager_id);
 CREATE POLICY "Managers can update own team" ON public.teams FOR UPDATE TO authenticated USING (auth.uid() = manager_id OR public.has_role(auth.uid(), 'admin'));
 CREATE POLICY "Admins can delete teams" ON public.teams FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'admin'));
