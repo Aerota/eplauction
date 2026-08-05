@@ -37,13 +37,13 @@ export function MatchCard({ match, compact = false }: { match: Match; compact?: 
       <div className="mt-4 space-y-2">
         <TeamRow
           name={match.team_a_name}
-          logo={match.team_a_logo_url}
+          logo={logoFor(match.team_a_name, match.team_a_logo_url)}
           score={match.status === "upcoming" ? "—" : scoreLine(match.team_a_score, match.team_a_wickets, match.team_a_overs)}
           batting={isLive && match.batting_team === match.team_a_name}
         />
         <TeamRow
           name={match.team_b_name}
-          logo={match.team_b_logo_url}
+          logo={logoFor(match.team_b_name, match.team_b_logo_url)}
           score={match.status === "upcoming" ? "—" : scoreLine(match.team_b_score, match.team_b_wickets, match.team_b_overs)}
           batting={isLive && match.batting_team === match.team_b_name}
         />
