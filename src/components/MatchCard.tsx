@@ -35,11 +35,13 @@ export function MatchCard({ match, compact = false }: { match: Match; compact?: 
       <div className="mt-4 space-y-2">
         <TeamRow
           name={match.team_a_name}
+          logo={match.team_a_logo_url}
           score={match.status === "upcoming" ? "—" : scoreLine(match.team_a_score, match.team_a_wickets, match.team_a_overs)}
           batting={isLive && match.batting_team === match.team_a_name}
         />
         <TeamRow
           name={match.team_b_name}
+          logo={match.team_b_logo_url}
           score={match.status === "upcoming" ? "—" : scoreLine(match.team_b_score, match.team_b_wickets, match.team_b_overs)}
           batting={isLive && match.batting_team === match.team_b_name}
         />
@@ -67,11 +69,32 @@ export function MatchCard({ match, compact = false }: { match: Match; compact?: 
   );
 }
 
-function TeamRow({ name, score, batting }: { name: string; score: string; batting?: boolean }) {
+export function TeamLogo({ name, logo, size = "sm" }: { name: string; logo?: string | null; size?: "sm" | "lg" }) {
+  const box = size === "lg" ? "h-12 w-12 text-sm" : "h-6 w-6 text-[10px]";
+  if (logo) {
+    return (
+      <img
+        src={logo}
+        alt={`${name} logo`}
+        loading="lazy"
+        className={`${box} shrink-0 rounded-md object-contain`}
+      />
+    );
+  }
+  return (
+    <span className={`${box} grid shrink-0 place-items-center rounded-md bg-muted font-bold uppercase text-muted-foreground`}>
+      {name.slice(0, 2)}
+    </span>
+  );
+}
+
+function TeamRow({ name, logo, score, batting }: { name: string; logo?: string | null; score: string; batting?: boolean }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className={`text-sm ${batting ? "font-bold text-foreground" : "font-medium text-muted-foreground"}`}>
-        {name} {batting && <span className="text-neon-blue">•</span>}
+      <span className={`flex min-w-0 items-center gap-2 text-sm ${batting ? "font-bold text-foreground" : "font-medium text-muted-foreground"}`}>
+        <TeamLogo name={name} logo={logo} />
+        <span className="truncate">{name}</span>
+        {batting && <span className="text-neon-blue">•</span>}
       </span>
       <span className="text-sm font-bold tabular-nums">{score}</span>
     </div>
