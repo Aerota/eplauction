@@ -71,27 +71,32 @@ function MatchDetailPage() {
           )}
         </div>
 
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <TeamScore
-            name={match.team_a_name}
-            runs={match.team_a_score}
-            wickets={match.team_a_wickets}
-            overs={match.team_a_overs}
-            upcoming={match.status === "upcoming"}
-            batting={isLive && match.batting_team === match.team_a_name}
-          />
-          <TeamScore
-            name={match.team_b_name}
-            runs={match.team_b_score}
-            wickets={match.team_b_wickets}
-            overs={match.team_b_overs}
-            upcoming={match.status === "upcoming"}
-            batting={isLive && match.batting_team === match.team_b_name}
-          />
+        <div className="mt-6 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4">
+          <TeamSide name={match.team_a_name} logo={match.team_a_logo_url} batting={isLive && match.batting_team === match.team_a_name} />
+          <div className="text-center">
+            {match.status === "upcoming" ? (
+              <div className="text-sm font-semibold text-muted-foreground">Match yet to begin</div>
+            ) : (
+              <div className="flex items-center justify-center gap-4">
+                <div className="text-2xl font-extrabold tabular-nums sm:text-3xl">
+                  {match.team_a_score}/{match.team_a_wickets}
+                  <div className="text-xs font-medium text-muted-foreground">({match.team_a_overs} ov)</div>
+                </div>
+                <span className="text-xs font-semibold uppercase text-muted-foreground">vs</span>
+                <div className="text-2xl font-extrabold tabular-nums sm:text-3xl">
+                  {match.team_b_score}/{match.team_b_wickets}
+                  <div className="text-xs font-medium text-muted-foreground">({match.team_b_overs} ov)</div>
+                </div>
+              </div>
+            )}
+          </div>
+          <TeamSide name={match.team_b_name} logo={match.team_b_logo_url} batting={isLive && match.batting_team === match.team_b_name} />
         </div>
 
-        {toss && <p className="mt-4 text-xs text-muted-foreground">{toss}</p>}
-        {match.result_summary && <p className="mt-2 text-sm font-semibold text-neon-blue">{match.result_summary}</p>}
+        <div className="mt-4 space-y-1 text-center">
+          {match.result_summary && <p className="text-sm font-semibold text-neon-blue">{match.result_summary}</p>}
+          {toss && <p className="text-xs text-muted-foreground">{toss}</p>}
+        </div>
         {match.commentary && (
           <p className="mt-3 rounded-lg bg-muted/40 p-3 text-xs text-muted-foreground">{match.commentary}</p>
         )}
