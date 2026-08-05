@@ -323,7 +323,7 @@ function EditTeamModal({
             </div>
           ))}
           {form.logo_url && (
-            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover neon-ring" />
+            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover" />
           )}
         </div>
 
@@ -408,9 +408,9 @@ function DetailModal({ detail, onClose, onEdit }: { detail: { kind: "player" | "
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             {detail.kind === "player" && d.photo_url ? (
-              <img src={d.photo_url} alt="" className="h-14 w-14 rounded-full object-cover neon-ring" />
+              <img src={d.photo_url} alt="" className="h-14 w-14 rounded-full object-cover" />
             ) : detail.kind === "team" && d.logo_url ? (
-              <img src={d.logo_url} alt="" className="h-14 w-14 rounded-lg object-cover neon-ring" />
+              <img src={d.logo_url} alt="" className="h-14 w-14 rounded-lg object-cover" />
             ) : (
               <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-gradient-neon shadow-neon-purple">
                 {detail.kind === "player" ? <Users className="h-6 w-6 text-primary-foreground" /> : <UsersRound className="h-6 w-6 text-primary-foreground" />}

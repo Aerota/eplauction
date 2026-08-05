@@ -75,7 +75,7 @@ function TeamReg() {
             <div className="mt-6 rounded-2xl border-neon bg-gradient-neon-soft p-6">
               <div className="flex items-center gap-4">
                 {existing.logo_url ? (
-                  <img src={existing.logo_url} alt="" className="h-16 w-16 rounded-xl object-cover neon-ring" />
+                  <img src={existing.logo_url} alt="" className="h-16 w-16 rounded-xl object-cover" />
                 ) : (
                   <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-neon shadow-neon-purple">
                     <UsersRound className="h-8 w-8 text-primary-foreground" />

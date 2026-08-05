@@ -137,7 +137,7 @@ function AuctionPage() {
               <div className="rounded-2xl border-neon bg-gradient-neon-soft p-6">
                 <div className="flex flex-col gap-6 sm:flex-row">
                   {player.photo_url ? (
-                    <img src={player.photo_url} alt="" className="h-40 w-40 rounded-2xl object-cover neon-ring" />
+                    <img src={player.photo_url} alt="" className="h-40 w-40 rounded-2xl object-cover" />
                   ) : (
                     <div className="flex h-40 w-40 items-center justify-center rounded-2xl bg-gradient-neon shadow-neon-purple">
                       <Users className="h-16 w-16 text-primary-foreground" />
@@ -242,7 +242,7 @@ function AuctionPage() {
               <div className="rounded-2xl border border-border bg-card/60 p-5">
                 <div className="flex items-center gap-3">
                   {myTeam.logo_url ? (
-                    <img src={myTeam.logo_url} alt="" className="h-10 w-10 rounded-lg object-cover neon-ring" />
+                    <img src={myTeam.logo_url} alt="" className="h-10 w-10 rounded-lg object-cover" />
                   ) : (
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-neon">
                       <UsersRound className="h-5 w-5 text-primary-foreground" />
