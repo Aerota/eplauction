@@ -12,7 +12,8 @@ export function useTeamLogos() {
     let active = true;
     (async () => {
       const { data } = await supabase.from("teams").select("team_name, logo_url");
-
+      if (!active || !data) return;
+      const map: Record<string, string> = {};
       for (const t of data) {
         if (t.logo_url) map[t.team_name.trim().toLowerCase()] = t.logo_url;
       }      
