@@ -173,17 +173,7 @@ function AuthPage() {
 
           {tab !== "admin" && (
             <>
-              <div className="my-4 flex items-center gap-3 text-xs text-muted-foreground">
-                <div className="h-px flex-1 bg-border" />
-                or
-                <div className="h-px flex-1 bg-border" />
-              </div>
-              <button
-                onClick={handleGoogle}
-                className="w-full rounded-md border border-border bg-background/60 px-4 py-2.5 text-sm font-medium hover:bg-muted"
-              >
-                Continue with Google
-              </button>
+             
             </>
           )}
 
