@@ -3,6 +3,7 @@ import { Users, Zap, Radio, ArrowRight } from "lucide-react";
 import logoAsset from "@/assets/logo_for_web.png.asset.json";
 import { useMatches } from "@/lib/use-matches";
 import { MatchCard } from "@/components/MatchCard";
+import { useSponsorBanners } from "@/lib/use-sponsors";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -136,21 +137,40 @@ function MatchesSnapshot() {
           ))}
         </div>
       )}
-        <div>
-          
-          <h2 className="text-2xl font-bold tracking-tight">
-            <br />
-            Our Sponsors
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-          </p>
-           <div> 
-             {/* <img src="https://i.pinimg.com/736x/1c/68/6e/1c686eea5580f43241c7fc23df12e698.jpg"></img> */}
-           </div>
-        </div>
+      <SponsorsSection />
     </section>
   );
 }
+
+function SponsorsSection() {
+  const { desktop, mobile } = useSponsorBanners();
+  if (!desktop && !mobile) return null;
+
+  return (
+    <div className="mt-20 pb-8 text-center sm:mt-28">
+      <h2 className="text-2xl font-bold tracking-tight">Our Sponsors</h2>
+      <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+        Proudly supported by our partners.
+      </p>
+      <div className="mx-auto mt-8 max-w-5xl overflow-hidden rounded-2xl border border-border bg-card/40">
+        {mobile && (
+          <img
+            src={mobile}
+            alt="ESAG Premier League sponsors"
+            className="w-full sm:hidden"
+            loading="lazy"
+          />
+        )}
+        {desktop && (
+          <img
+            src={desktop}
+            alt="ESAG Premier League sponsors"
+            className={`w-full ${mobile ? "hidden sm:block" : ""}`}
+            loading="lazy"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
