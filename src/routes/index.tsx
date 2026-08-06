@@ -102,12 +102,13 @@ function Landing() {
     </div>
   );
 }
-{/*
+
 function MatchesSnapshot() {
   const { live, upcoming, loading } = useMatches();
   const shown = [...live, ...upcoming].slice(0, 3);
 
   return (
+    {/*
     <section className="mx-auto max-w-6xl px-6 pb-8">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
@@ -170,7 +171,7 @@ function SponsorsSection() {
           />
         )}
       </div>
-    </div>
-  );*/}
+    </div>*/}
+  );
 }
 
