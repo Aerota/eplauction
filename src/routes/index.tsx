@@ -35,13 +35,13 @@ function Landing() {
           Engineering Students' Association Gampaha
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
-          <span className="text-foreground">ESAG</span>
+          <span className="text-foreground">Website Under</span>
            <br />
           <span className="text-neon-purple">
-            Premier League
+            Maintenance
           </span>
         </h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+        {/* <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
           Welcome to the official ESAG Cricket Player Auction. An intelligent
           auction platform that combines AI-driven player analysis, live
           bidding, and real-time team management to create a fair and exciting
@@ -61,7 +61,7 @@ function Landing() {
           >
             Get started
           </Link>
-        </div>
+        </div>*/}
       </section>
 
       <MatchesSnapshot />
@@ -102,7 +102,7 @@ function Landing() {
     </div>
   );
 }
-
+{/*
 function MatchesSnapshot() {
   const { live, upcoming, loading } = useMatches();
   const shown = [...live, ...upcoming].slice(0, 3);
@@ -171,6 +171,6 @@ function SponsorsSection() {
         )}
       </div>
     </div>
-  );
+  );*/}
 }
 
