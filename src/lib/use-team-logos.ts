@@ -11,7 +11,7 @@ export function useTeamLogos() {
   useEffect(() => {
     let active = true;
     (async () => {
-      const { data } = await supabase.from("teams").select("team_name, logo_url");
+      const { data } = await supabase.rpc("get_team_logos");
       if (!active || !data) return;
       const map: Record<string, string> = {};
       for (const t of data) {
