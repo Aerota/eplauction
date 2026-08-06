@@ -35,13 +35,13 @@ function Landing() {
           Engineering Students' Association Gampaha
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
-          <span className="text-foreground">Website Under</span>
+          <span className="text-foreground">ESAG</span>
            <br />
           <span className="text-neon-purple">
-            Maintenance
+            Premier League
           </span>
         </h1>
-        {/* <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
           Welcome to the official ESAG Cricket Player Auction. An intelligent
           auction platform that combines AI-driven player analysis, live
           bidding, and real-time team management to create a fair and exciting
@@ -61,7 +61,7 @@ function Landing() {
           >
             Get started
           </Link>
-        </div>*/}
+        </div>
       </section>
 
       <MatchesSnapshot />
@@ -108,7 +108,6 @@ function MatchesSnapshot() {
   const shown = [...live, ...upcoming].slice(0, 3);
 
   return (
-    {/*
     <section className="mx-auto max-w-6xl px-6 pb-8">
       <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
         <div>
@@ -139,7 +138,7 @@ function MatchesSnapshot() {
         </div>
       )}
       <SponsorsSection />
-    </section>*/}
+    </section>
   );
 }
 
@@ -148,7 +147,7 @@ function SponsorsSection() {
   if (!desktop && !mobile) return null;
 
   return (
-    {/* <div className="mt-10 pb-8 text-center sm:mt-28">
+    <div className="mt-10 pb-8 text-center sm:mt-28">
       <h2 className="text-2xl font-bold tracking-tight">Our Sponsors</h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
         Proudly supported by our partners.
@@ -171,7 +170,7 @@ function SponsorsSection() {
           />
         )}
       </div>
-    </div>*/}
+    </div>
   );
 }
 
