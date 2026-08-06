@@ -443,6 +443,13 @@ export type Database = {
     }
     Functions: {
       claim_admin_role: { Args: never; Returns: boolean }
+      get_team_logos: {
+        Args: never
+        Returns: {
+          logo_url: string
+          team_name: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
