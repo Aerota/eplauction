@@ -147,7 +147,7 @@ function SponsorsSection() {
   if (!desktop && !mobile) return null;
 
   return (
-    <div className="mt-20 pb-8 text-center sm:mt-28">
+    <div className="mt-10 pb-8 text-center sm:mt-28">
       <h2 className="text-2xl font-bold tracking-tight">Our Sponsors</h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
         Proudly supported by our partners.
