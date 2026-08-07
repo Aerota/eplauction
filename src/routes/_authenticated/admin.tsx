@@ -311,7 +311,6 @@ function EditTeamModal({
           {([
             ["team_name", "Team name", "text"],
             ["manager_name", "Manager name", "text"],
-            ["logo_url", "Logo URL", "text"],
             ["budget_remaining", "Budget remaining (M)", "number"],
           ] as const).map(([key, label, type]) => (
             <div key={key}>
@@ -325,10 +324,14 @@ function EditTeamModal({
               />
             </div>
           ))}
-          {form.logo_url && (
-            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover" />
-          )}
+          <ImageField
+            label="Team logo"
+            folder="team-logos"
+            value={form.logo_url}
+            onChange={(url) => setForm({ ...form, logo_url: url })}
+          />
         </div>
+
 
         <div className="mt-6 flex justify-end gap-2">
           <button type="button" onClick={onClose} className="rounded-md border border-border px-4 py-2 text-sm">Cancel</button>
