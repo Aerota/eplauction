@@ -223,7 +223,7 @@ function AuctionPage() {
                     </form>
                   </div>
                 ) : (
-                  <p className="mt-4 text-xs text-muted-foreground"></p>
+                  <p className="mt-4 text-xs text-muted-foreground">Register a team to place bids.</p>
                 )}
               </div>
             ) : (
@@ -290,9 +290,7 @@ function AuctionPage() {
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-border bg-card/60 p-5 text-sm text-muted-foreground">
-                You're spectating. <Link to="/team-registration" className="text-neon-blue underline">Register a team</Link> to bid.
-              </div>
+              
             )}
 
             {/* All teams ticker */}
