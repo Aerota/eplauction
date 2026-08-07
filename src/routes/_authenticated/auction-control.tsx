@@ -96,6 +96,21 @@ function AdminAuction() {
             >
               <SkipForward className="h-3.5 w-3.5" /> Next round
             </button>
+            <label className="inline-flex items-center gap-2 rounded-md border border-border bg-card/60 px-3 py-1.5 text-xs font-medium">
+              Set round
+              <select
+                value={settings?.auction_round ?? 0}
+                onChange={(e) => rpc("set_auction_round", { _round: Number(e.target.value) })}
+                className="rounded-md border border-border bg-input px-2 py-1 text-xs"
+              >
+                {[0, 1, 2, 3].map((r) => (
+                  <option key={r} value={r}>
+                    {r === 0 ? "Pre-auction (0)" : `Round ${r}`}
+                  </option>
+                ))}
+              </select>
+            </label>
+
             <Link to="/auction" className="inline-flex items-center gap-1 rounded-md border-neon bg-card/60 px-3 py-1.5 text-xs font-semibold hover:shadow-neon-blue">
               <Radio className="h-3.5 w-3.5" /> Open stream view
             </Link>
