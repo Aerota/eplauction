@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { SponsorsAdmin } from "@/components/admin/SponsorsAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles, Pencil } from "lucide-react";
+import { ImageField } from "@/components/ImageField";
+
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin Console — ESAG Auction" }] }),

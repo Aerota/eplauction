@@ -140,6 +140,14 @@ function AdminAuction() {
                 >
                   <XCircle className="h-4 w-4" /> Mark unsold
                 </button>
+                <button
+                  onClick={() => rpc("clear_current_player")}
+                  className="inline-flex items-center justify-center gap-1 rounded-md border border-border bg-card/60 px-3 py-2 text-xs font-semibold hover:bg-muted"
+                  title="Take this player off the block and keep them available"
+                >
+                  <Undo2 className="h-4 w-4" /> Remove from block
+                </button>
+
               </div>
             </div>
           ) : (
