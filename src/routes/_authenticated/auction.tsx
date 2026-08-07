@@ -223,7 +223,7 @@ function AuctionPage() {
                     </form>
                   </div>
                 ) : (
-                  <p className="mt-4 text-xs text-muted-foreground">Register a team to place bids.</p>
+                  <p className="mt-4 text-xs text-muted-foreground"></p>
                 )}
               </div>
             ) : (
