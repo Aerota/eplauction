@@ -5,6 +5,8 @@ import { submitPlayerRegistration } from "@/lib/players.functions";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, Sparkles } from "lucide-react";
+import { ImageField } from "@/components/ImageField";
+
 
 export const Route = createFileRoute("/_authenticated/player-registration")({
   head: () => ({ meta: [{ title: "Player Registration — ESAG Auction" }] }),
@@ -111,9 +113,16 @@ function PlayerReg() {
               <option value="female">Female</option>
             </select>
           </Field>
-          <Field label="Photo URL" span2>
-            <input type="url" placeholder="https://…" value={form.photo_url} onChange={(e) => setForm({ ...form, photo_url: e.target.value })} className={inputCls} />
-          </Field>
+          <div className="sm:col-span-2">
+            <ImageField
+              label="Player photo"
+              folder="player-photos"
+              round
+              value={form.photo_url}
+              onChange={(url) => setForm({ ...form, photo_url: url })}
+            />
+          </div>
+
         </Section>
 
         <Section title="Playing style">
