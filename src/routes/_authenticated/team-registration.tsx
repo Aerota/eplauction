@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ArrowLeft, UsersRound } from "lucide-react";
+import { ImageField } from "@/components/ImageField";
+
 
 export const Route = createFileRoute("/_authenticated/team-registration")({
   head: () => ({ meta: [{ title: "Team Registration — ESAG Auction" }] }),
@@ -126,16 +128,13 @@ function TeamReg() {
                   className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
                 />
               </div>
-              <div>
-                <label className="mb-1 block text-xs font-medium">Logo URL</label>
-                <input
-                  type="url"
-                  placeholder="https://…"
-                  value={form.logo_url}
-                  onChange={(e) => setForm({ ...form, logo_url: e.target.value })}
-                  className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-                />
-              </div>
+              <ImageField
+                label="Team logo"
+                folder="team-logos"
+                value={form.logo_url}
+                onChange={(url) => setForm({ ...form, logo_url: url })}
+              />
+
               <button
                 type="submit"
                 disabled={loading}

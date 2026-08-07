@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useMyRoles } from "@/lib/use-role";
 import { toast } from "sonner";
-import { ArrowLeft, Gavel, Play, Pause, SkipForward, CheckCircle2, XCircle, Star, RotateCcw, Radio } from "lucide-react";
+import { ArrowLeft, Gavel, Play, Pause, SkipForward, CheckCircle2, XCircle, Star, RotateCcw, Radio, Undo2 } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/auction-control")({
   head: () => ({ meta: [{ title: "Auction Control — ESAG" }] }),
@@ -96,6 +96,21 @@ function AdminAuction() {
             >
               <SkipForward className="h-3.5 w-3.5" /> Next round
             </button>
+            <label className="inline-flex items-center gap-2 rounded-md border border-border bg-card/60 px-3 py-1.5 text-xs font-medium">
+              Set round
+              <select
+                value={settings?.auction_round ?? 0}
+                onChange={(e) => rpc("set_auction_round", { _round: Number(e.target.value) })}
+                className="rounded-md border border-border bg-input px-2 py-1 text-xs"
+              >
+                {[0, 1, 2, 3].map((r) => (
+                  <option key={r} value={r}>
+                    {r === 0 ? "Pre-auction (0)" : `Round ${r}`}
+                  </option>
+                ))}
+              </select>
+            </label>
+
             <Link to="/auction" className="inline-flex items-center gap-1 rounded-md border-neon bg-card/60 px-3 py-1.5 text-xs font-semibold hover:shadow-neon-blue">
               <Radio className="h-3.5 w-3.5" /> Open stream view
             </Link>
@@ -140,6 +155,14 @@ function AdminAuction() {
                 >
                   <XCircle className="h-4 w-4" /> Mark unsold
                 </button>
+                <button
+                  onClick={() => rpc("clear_current_player")}
+                  className="inline-flex items-center justify-center gap-1 rounded-md border border-border bg-card/60 px-3 py-2 text-xs font-semibold hover:bg-muted"
+                  title="Take this player off the block and keep them available"
+                >
+                  <Undo2 className="h-4 w-4" /> Remove from block
+                </button>
+
               </div>
             </div>
           ) : (

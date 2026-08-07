@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { SponsorsAdmin } from "@/components/admin/SponsorsAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles, Pencil } from "lucide-react";
+import { ImageField } from "@/components/ImageField";
+
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Admin Console — ESAG Auction" }] }),
@@ -20,6 +22,8 @@ function AdminPage() {
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
   const [editTeam, setEditTeam] = useState<any | null>(null);
+  const [editPlayer, setEditPlayer] = useState<any | null>(null);
+
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "sponsors" | "settings">("players");
 
   useEffect(() => {
@@ -63,6 +67,16 @@ function AdminPage() {
     setEditTeam(null);
     refresh();
   }
+
+  async function savePlayer(id: string, values: Record<string, any>) {
+    const { error } = await supabase.from("players").update(values as never).eq("id", id);
+
+    if (error) return toast.error(error.message);
+    toast.success("Player updated");
+    setEditPlayer(null);
+    refresh();
+  }
+
 
   async function saveSettings(next: Partial<typeof settings>) {
     const { error } = await supabase
@@ -163,13 +177,23 @@ function AdminPage() {
                       <td className="px-4 py-3">{p.base_price}M</td>
                       <td className="px-4 py-3 text-xs capitalize text-muted-foreground">{p.status}</td>
                       <td className="px-4 py-3">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); deletePlayer(p.id, p.full_name); }}
-                          className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <div className="flex justify-end gap-1">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setEditPlayer(p); }}
+                            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                            aria-label={`Edit ${p.full_name}`}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); deletePlayer(p.id, p.full_name); }}
+                            className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </td>
+
                     </tr>
                   ))}
                   {players.length === 0 && (
@@ -254,12 +278,20 @@ function AdminPage() {
         <DetailModal
           detail={detail}
           onClose={() => setDetail(null)}
-          onEdit={detail.kind === "team" ? () => { setEditTeam(detail.data); setDetail(null); } : undefined}
+          onEdit={
+            detail.kind === "team"
+              ? () => { setEditTeam(detail.data); setDetail(null); }
+              : () => { setEditPlayer(detail.data); setDetail(null); }
+          }
         />
       )}
       {editTeam && (
         <EditTeamModal team={editTeam} onClose={() => setEditTeam(null)} onSave={saveTeam} />
       )}
+      {editPlayer && (
+        <EditPlayerModal player={editPlayer} onClose={() => setEditPlayer(null)} onSave={savePlayer} />
+      )}
+
     </div>
   );
 }
@@ -311,7 +343,6 @@ function EditTeamModal({
           {([
             ["team_name", "Team name", "text"],
             ["manager_name", "Manager name", "text"],
-            ["logo_url", "Logo URL", "text"],
             ["budget_remaining", "Budget remaining (M)", "number"],
           ] as const).map(([key, label, type]) => (
             <div key={key}>
@@ -325,10 +356,14 @@ function EditTeamModal({
               />
             </div>
           ))}
-          {form.logo_url && (
-            <img src={form.logo_url} alt="Team logo preview" className="h-16 w-16 rounded-lg object-cover" />
-          )}
+          <ImageField
+            label="Team logo"
+            folder="team-logos"
+            value={form.logo_url}
+            onChange={(url) => setForm({ ...form, logo_url: url })}
+          />
         </div>
+
 
         <div className="mt-6 flex justify-end gap-2">
           <button type="button" onClick={onClose} className="rounded-md border border-border px-4 py-2 text-sm">Cancel</button>
@@ -343,6 +378,157 @@ function EditTeamModal({
     </div>
   );
 }
+
+const PLAYER_TEXT_FIELDS = [
+  ["full_name", "Full name", "text"],
+  ["age", "Age", "number"],
+  ["batting_style", "Batting style", "text"],
+  ["bowling_style", "Bowling style", "text"],
+  ["years_experience", "Years of experience", "number"],
+  ["matches_played", "Matches played", "number"],
+  ["batting_average", "Batting average", "number"],
+  ["bowling_average", "Bowling average", "number"],
+  ["highest_score", "Highest score", "number"],
+  ["best_bowling", "Best bowling", "text"],
+  ["skill_level", "Skill level (0-100)", "number"],
+  ["fitness_level", "Fitness level (0-100)", "number"],
+  ["base_price", "Base price (M)", "number"],
+] as const;
+
+function EditPlayerModal({
+  player,
+  onClose,
+  onSave,
+}: {
+  player: any;
+  onClose: () => void;
+  onSave: (id: string, values: Record<string, any>) => void;
+}) {
+  const [form, setForm] = useState<Record<string, string>>(() => {
+    const base: Record<string, string> = {};
+    for (const [key] of PLAYER_TEXT_FIELDS) base[key] = player[key] == null ? "" : String(player[key]);
+    base.gender = player.gender ?? "male";
+    base.primary_role = player.primary_role ?? "batsman";
+    base.category = player.category ?? "";
+    base.status = player.status ?? "pending";
+    base.photo_url = player.photo_url ?? "";
+    base.fitness_notes = player.fitness_notes ?? "";
+    base.achievements = player.achievements ?? "";
+    base.ai_summary = player.ai_summary ?? "";
+    return base;
+  });
+
+  const numeric = new Set(PLAYER_TEXT_FIELDS.filter(([, , t]) => t === "number").map(([k]) => k as string));
+
+  function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.full_name.trim()) return toast.error("Full name is required");
+    const values: Record<string, any> = {
+      gender: form.gender,
+      primary_role: form.primary_role,
+      category: form.category || null,
+      status: form.status,
+      photo_url: form.photo_url.trim() || null,
+      fitness_notes: form.fitness_notes.trim() || null,
+      achievements: form.achievements.trim() || null,
+      ai_summary: form.ai_summary.trim() || null,
+    };
+    for (const [key] of PLAYER_TEXT_FIELDS) {
+      const raw = form[key]?.trim() ?? "";
+      values[key] = numeric.has(key) ? (raw === "" ? null : Number(raw)) : raw || null;
+    }
+    values.full_name = form.full_name.trim();
+    onSave(player.id, values);
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
+      <form
+        onClick={(e) => e.stopPropagation()}
+        onSubmit={submit}
+        className="max-h-[85vh] w-full max-w-2xl overflow-auto rounded-2xl border border-border bg-card p-6 shadow-neon-purple"
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-lg font-bold">Edit player</h2>
+            <p className="text-xs text-muted-foreground">Update any detail, including AI grading and category</p>
+          </div>
+          <button type="button" onClick={onClose} className="rounded-md p-1 hover:bg-muted"><X className="h-5 w-5" /></button>
+        </div>
+
+        <div className="mt-5 space-y-4">
+          <ImageField
+            label="Player photo"
+            folder="player-photos"
+            round
+            value={form.photo_url}
+            onChange={(url) => setForm({ ...form, photo_url: url })}
+          />
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {PLAYER_TEXT_FIELDS.map(([key, label, type]) => (
+              <div key={key}>
+                <label className="mb-1 block text-xs font-medium">{label}</label>
+                <input
+                  type={type}
+                  step={type === "number" ? "0.1" : undefined}
+                  value={form[key]}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                  className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+                />
+              </div>
+            ))}
+
+            {([
+              ["gender", "Gender", ["male", "female"]],
+              ["primary_role", "Primary role", ["batsman", "bowler", "all_rounder", "wicket_keeper"]],
+              ["category", "Category", ["", "A", "B", "C"]],
+              ["status", "Status", ["pending", "available", "sold", "unsold", "pre_assigned"]],
+            ] as const).map(([key, label, options]) => (
+              <div key={key}>
+                <label className="mb-1 block text-xs font-medium">{label}</label>
+                <select
+                  value={form[key]}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                  className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm capitalize outline-none focus:ring-2 focus:ring-ring"
+                >
+                  {options.map((o) => (
+                    <option key={o} value={o}>{o === "" ? "—" : o.replace("_", " ")}</option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          {([
+            ["fitness_notes", "Fitness notes"],
+            ["achievements", "Achievements"],
+            ["ai_summary", "AI analysis"],
+          ] as const).map(([key, label]) => (
+            <div key={key}>
+              <label className="mb-1 block text-xs font-medium">{label}</label>
+              <textarea
+                rows={2}
+                value={form[key]}
+                onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                className="w-full rounded-md border border-border bg-input px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex justify-end gap-2">
+          <button type="button" onClick={onClose} className="rounded-md border border-border px-4 py-2 text-sm">Cancel</button>
+          <button className="rounded-md bg-gradient-neon px-5 py-2 text-sm font-semibold text-primary-foreground shadow-neon-purple">
+            Save changes
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+
 
 function catCls(c: string | null) {
   if (c === "A") return "bg-gradient-neon text-primary-foreground shadow-neon-purple";
