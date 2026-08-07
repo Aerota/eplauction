@@ -290,6 +290,9 @@ function AuctionPage() {
                 </div>
               </div>
             ) : (
+              <div className="rounded-2xl border border-border bg-card/60 p-5 text-sm text-muted-foreground">
+                You're spectating. 
+              </div>
               
             )}
 
