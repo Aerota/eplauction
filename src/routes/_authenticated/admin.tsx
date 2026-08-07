@@ -22,6 +22,8 @@ function AdminPage() {
   const [settings, setSettings] = useState<any>(null);
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
   const [editTeam, setEditTeam] = useState<any | null>(null);
+  const [editPlayer, setEditPlayer] = useState<any | null>(null);
+
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "sponsors" | "settings">("players");
 
   useEffect(() => {
@@ -65,6 +67,15 @@ function AdminPage() {
     setEditTeam(null);
     refresh();
   }
+
+  async function savePlayer(id: string, values: Record<string, any>) {
+    const { error } = await supabase.from("players").update(values).eq("id", id);
+    if (error) return toast.error(error.message);
+    toast.success("Player updated");
+    setEditPlayer(null);
+    refresh();
+  }
+
 
   async function saveSettings(next: Partial<typeof settings>) {
     const { error } = await supabase
@@ -165,13 +176,23 @@ function AdminPage() {
                       <td className="px-4 py-3">{p.base_price}M</td>
                       <td className="px-4 py-3 text-xs capitalize text-muted-foreground">{p.status}</td>
                       <td className="px-4 py-3">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); deletePlayer(p.id, p.full_name); }}
-                          className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <div className="flex justify-end gap-1">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setEditPlayer(p); }}
+                            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                            aria-label={`Edit ${p.full_name}`}
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); deletePlayer(p.id, p.full_name); }}
+                            className="rounded-md p-1.5 text-muted-foreground hover:bg-destructive/20 hover:text-destructive"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </td>
+
                     </tr>
                   ))}
                   {players.length === 0 && (
@@ -256,12 +277,20 @@ function AdminPage() {
         <DetailModal
           detail={detail}
           onClose={() => setDetail(null)}
-          onEdit={detail.kind === "team" ? () => { setEditTeam(detail.data); setDetail(null); } : undefined}
+          onEdit={
+            detail.kind === "team"
+              ? () => { setEditTeam(detail.data); setDetail(null); }
+              : () => { setEditPlayer(detail.data); setDetail(null); }
+          }
         />
       )}
       {editTeam && (
         <EditTeamModal team={editTeam} onClose={() => setEditTeam(null)} onSave={saveTeam} />
       )}
+      {editPlayer && (
+        <EditPlayerModal player={editPlayer} onClose={() => setEditPlayer(null)} onSave={savePlayer} />
+      )}
+
     </div>
   );
 }
