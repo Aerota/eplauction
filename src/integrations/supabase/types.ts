@@ -461,6 +461,7 @@ export type Database = {
     }
     Functions: {
       claim_admin_role: { Args: never; Returns: boolean }
+      clear_current_player: { Args: never; Returns: undefined }
       get_team_logos: {
         Args: never
         Returns: {
@@ -487,6 +488,7 @@ export type Database = {
       }
       sell_current_player: { Args: never; Returns: undefined }
       set_auction_live: { Args: { _live: boolean }; Returns: undefined }
+      set_auction_round: { Args: { _round: number }; Returns: undefined }
       set_current_player: { Args: { _player_id: string }; Returns: undefined }
       start_next_round: { Args: never; Returns: undefined }
     }
