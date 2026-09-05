@@ -21,17 +21,17 @@ function PlayerReg() {
   const [form, setForm] = useState({
     full_name: "",
     phone: "",
-    age: 22,
+    age: "",
     gender: "male" as "male" | "female",
     photo_url: "",
     primary_role: "batsman" as "batsman" | "bowler" | "all_rounder" | "wicket_keeper",
     batting_style: "",
     bowling_style: "",
-    years_experience: 0,
-    matches_played: 0,
-    batting_average: 0,
-    bowling_average: 0,
-    highest_score: 0,
+    years_experience: "",
+    matches_played: "",
+    batting_average: "",
+    bowling_average: "",
+    highest_score: "",
     best_bowling: "",
     fitness_notes: "",
     achievements: "",
@@ -47,11 +47,23 @@ function PlayerReg() {
     })();
   }, []);
 
+  const num = (v: string) => (v.trim() === "" ? null : Number(v));
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     try {
-      const result = await submit({ data: form });
+      const result = await submit({
+        data: {
+          ...form,
+          age: num(form.age),
+          years_experience: num(form.years_experience),
+          matches_played: num(form.matches_played),
+          batting_average: num(form.batting_average),
+          bowling_average: num(form.bowling_average),
+          highest_score: num(form.highest_score),
+        },
+      });
       toast.success(
         `Registered! AI graded you as Category ${result.category} (Skill ${result.skill_level}, Fitness ${result.fitness_level}).`,
         { duration: 6000 },
@@ -63,6 +75,7 @@ function PlayerReg() {
       setLoading(false);
     }
   }
+
 
   if (existing) {
     return (
