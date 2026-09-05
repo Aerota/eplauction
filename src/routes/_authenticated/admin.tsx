@@ -7,6 +7,8 @@ import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { SponsorsAdmin } from "@/components/admin/SponsorsAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles, Pencil } from "lucide-react";
 import { ImageField } from "@/components/ImageField";
+import { useServerFn } from "@tanstack/react-start";
+import { regradeAllPlayers } from "@/lib/players.functions";
 
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -23,6 +25,8 @@ function AdminPage() {
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
   const [editTeam, setEditTeam] = useState<any | null>(null);
   const [editPlayer, setEditPlayer] = useState<any | null>(null);
+  const [regrading, setRegrading] = useState(false);
+  const regrade = useServerFn(regradeAllPlayers);
 
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "sponsors" | "settings">("players");
 
@@ -67,6 +71,20 @@ function AdminPage() {
     setEditTeam(null);
     refresh();
   }
+  async function runRegrade() {
+    if (!confirm("Re-grade every player with the updated AI system? Categories and base prices may change.")) return;
+    setRegrading(true);
+    try {
+      const r = await regrade({});
+      toast.success(`Re-graded ${r.updated}/${r.total} players — A: ${r.counts.A}, B: ${r.counts.B}, C: ${r.counts.C}`, { duration: 8000 });
+      refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Re-grading failed");
+    } finally {
+      setRegrading(false);
+    }
+  }
+
 
   async function savePlayer(id: string, values: Record<string, any>) {
     const { error } = await supabase.from("players").update(values as never).eq("id", id);
@@ -130,10 +148,19 @@ function AdminPage() {
 
         {tab === "players" && (
           <div className="mt-6">
-            <div className="mb-3 flex items-center gap-2 text-sm">
+            <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
               <Users className="h-4 w-4 text-neon-blue" />
               <span className="font-semibold">Registered players ({players.length})</span>
+              <button
+                onClick={runRegrade}
+                disabled={regrading}
+                className="ml-auto inline-flex items-center gap-2 rounded-md border border-neon bg-gradient-neon-soft px-3 py-1.5 text-xs font-semibold disabled:opacity-60"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {regrading ? "Re-grading with AI…" : "Re-grade all players"}
+              </button>
             </div>
+
             <div className="overflow-hidden rounded-2xl border border-border bg-card/60">
               <table className="w-full text-sm">
                 <thead className="bg-muted/50 text-left text-xs uppercase text-muted-foreground">
