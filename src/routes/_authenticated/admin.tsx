@@ -67,6 +67,20 @@ function AdminPage() {
     setEditTeam(null);
     refresh();
   }
+  async function runRegrade() {
+    if (!confirm("Re-grade every player with the updated AI system? Categories and base prices may change.")) return;
+    setRegrading(true);
+    try {
+      const r = await regrade({});
+      toast.success(`Re-graded ${r.updated}/${r.total} players — A: ${r.counts.A}, B: ${r.counts.B}, C: ${r.counts.C}`, { duration: 8000 });
+      refresh();
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Re-grading failed");
+    } finally {
+      setRegrading(false);
+    }
+  }
+
 
   async function savePlayer(id: string, values: Record<string, any>) {
     const { error } = await supabase.from("players").update(values as never).eq("id", id);
