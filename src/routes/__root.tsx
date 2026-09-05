@@ -15,17 +15,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 
-function LoadingScreen({ children }: { children: React.ReactNode }) {
-  return (
-    <LoadingScreen>
-      <QueryClientProvider client={queryClient}>
-        <SiteHeader />
-        <Outlet />
-        <Toaster theme="dark" richColors position="top-right" />
-      </QueryClientProvider>
-    </LoadingScreen>
-  );
-}
 
 function NotFoundComponent() {
   return (
