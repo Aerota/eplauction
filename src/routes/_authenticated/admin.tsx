@@ -7,6 +7,8 @@ import { MatchesAdmin } from "@/components/admin/MatchesAdmin";
 import { SponsorsAdmin } from "@/components/admin/SponsorsAdmin";
 import { ArrowLeft, ShieldCheck, Trash2, Users, UsersRound, X, Sparkles, Pencil } from "lucide-react";
 import { ImageField } from "@/components/ImageField";
+import { useServerFn } from "@tanstack/react-start";
+import { regradeAllPlayers } from "@/lib/players.functions";
 
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -23,6 +25,8 @@ function AdminPage() {
   const [detail, setDetail] = useState<{ kind: "player" | "team"; data: any } | null>(null);
   const [editTeam, setEditTeam] = useState<any | null>(null);
   const [editPlayer, setEditPlayer] = useState<any | null>(null);
+  const [regrading, setRegrading] = useState(false);
+  const regrade = useServerFn(regradeAllPlayers);
 
   const [tab, setTab] = useState<"players" | "teams" | "matches" | "sponsors" | "settings">("players");
 
