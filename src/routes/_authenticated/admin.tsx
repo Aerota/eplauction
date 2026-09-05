@@ -130,10 +130,19 @@ function AdminPage() {
 
         {tab === "players" && (
           <div className="mt-6">
-            <div className="mb-3 flex items-center gap-2 text-sm">
+            <div className="mb-3 flex flex-wrap items-center gap-3 text-sm">
               <Users className="h-4 w-4 text-neon-blue" />
               <span className="font-semibold">Registered players ({players.length})</span>
+              <button
+                onClick={runRegrade}
+                disabled={regrading}
+                className="ml-auto inline-flex items-center gap-2 rounded-md border border-neon bg-gradient-neon-soft px-3 py-1.5 text-xs font-semibold disabled:opacity-60"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {regrading ? "Re-grading with AI…" : "Re-grade all players"}
+              </button>
             </div>
+
             <div className="overflow-hidden rounded-2xl border border-border bg-card/60">
               <table className="w-full text-sm">
                 <thead className="bg-muted/50 text-left text-xs uppercase text-muted-foreground">
