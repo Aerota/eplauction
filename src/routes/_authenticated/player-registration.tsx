@@ -118,7 +118,7 @@ function PlayerReg() {
             <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputCls} />
           </Field>
           <Field label="Age">
-            <input type="number" min={10} max={80} required placeholder="Leave blank if unknown" value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} className={inputCls} />
+            <input type="number" min={10} max={80} required value={form.age} onChange={(e) => setForm({ ...form, age: e.target.value })} className={inputCls} />
           </Field>
           <Field label="Gender">
             <select value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value as any })} className={inputCls}>
