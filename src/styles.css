@@ -124,3 +124,94 @@
     box-shadow: 0 0 0 1px oklch(0.65 0.30 300 / 0.6), 0 0 16px oklch(0.68 0.24 240 / 0.4);
   }
 }
+
+/* Loading screen animations */
+@keyframes ballBounce {
+  0% {
+    transform: translate(-50%, -180px) scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  55% {
+    transform: translate(-50%, -28px) scale(1.05);
+  }
+  70% {
+    transform: translate(-50%, 0) scale(0.95);
+  }
+  85% {
+    transform: translate(-50%, -8px) scale(1);
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes stumpPulse {
+  0% {
+    transform: scaleY(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scaleY(1.08) skewX(3deg);
+    filter: brightness(1.6);
+  }
+  100% {
+    transform: scaleY(1);
+    filter: brightness(1);
+  }
+}
+
+@keyframes bailFly {
+  0% {
+    transform: translate(-50%, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-30%, -40px) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes impactBurst {
+  0% {
+    transform: translate(-50%, 0) scale(0.4);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes titlePop {
+  0% {
+    transform: scale(0.9) translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes loadBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
