@@ -33,89 +33,108 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
           exiting ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        {/* Animated background field lines */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30">
-          <div className="absolute left-1/2 top-1/2 h-[120vh] w-1 -translate-x-1/2 -translate-y-1/2 rotate-12 bg-gradient-to-b from-transparent via-[oklch(0.65_0.30_300_/0.4)] to-transparent blur-sm" />
-          <div className="absolute left-1/2 top-1/2 h-[120vh] w-1 -translate-x-1/2 -translate-y-1/2 -rotate-12 bg-gradient-to-b from-transparent via-[oklch(0.68_0.24_240_/0.4)] to-transparent blur-sm" />
-          <div className="absolute left-1/2 top-1/2 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[oklch(0.65_0.30_300_/0.15)]" />
-          <div className="absolute left-1/2 top-1/2 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[oklch(0.68_0.24_240_/0.15)]" />
-        </div>
+        {/* Soft glow backdrop */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 50% 45%, oklch(0.65 0.30 300 / 0.12), transparent 70%), radial-gradient(50% 40% at 50% 60%, oklch(0.68 0.24 240 / 0.10), transparent 70%)",
+          }}
+        />
 
-        {/* Cricket pitch / stumps scene */}
-        <div className="relative z-10 flex h-48 w-64 items-end justify-center">
-          {/* Stumps */}
-          <div className="absolute bottom-0 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-            {[0, 1, 2].map((i) => (
-              <div
-                key={i}
-                className="h-24 w-2 rounded-sm bg-gradient-to-b from-[oklch(0.85_0.10_80)] to-[oklch(0.60_0.14_70)]"
-                style={{
-                  boxShadow: "0 0 14px oklch(0.65 0.30 300 / 0.5)",
-                  animation: `stumpPulse 0.55s ease-in-out ${1.1 + i * 0.06}s both`,
-                }}
-              />
-            ))}
-            {/* Bails */}
-            <div
-              className="absolute -top-1 left-1/2 h-1 w-10 -translate-x-1/2 rounded-full bg-[oklch(0.85_0.10_80)]"
-              style={{
-                boxShadow: "0 0 10px oklch(0.68 0.24 240 / 0.6)",
-                animation: "bailFly 0.6s ease-out 1.2s both",
-              }}
-            />
-          </div>
-
-          {/* Neon cricket ball */}
+        {/* Ball arc scene */}
+        <div className="relative z-10 h-44 w-[22rem] sm:w-[28rem]">
+          {/* Pitch ground line */}
           <div
-            className="absolute bottom-8 left-1/2 z-20 h-10 w-10 -translate-x-1/2 rounded-full"
+            className="absolute bottom-6 left-1/2 h-px w-full -translate-x-1/2"
             style={{
               background:
-                "radial-gradient(circle at 30% 30%, oklch(0.95 0.05 280), oklch(0.65 0.30 300) 60%)",
+                "linear-gradient(to right, transparent, oklch(0.65 0.30 300 / 0.6), oklch(0.68 0.24 240 / 0.6), transparent)",
+              animation: "groundGlow 2s ease-out both",
+            }}
+          />
+
+          {/* Trajectory path that draws itself */}
+          <svg
+            viewBox="0 0 448 160"
+            className="absolute inset-0 h-full w-full overflow-visible"
+            aria-hidden
+          >
+            <path
+              d="M 10 130 Q 224 -40 438 110"
+              fill="none"
+              stroke="url(#eplArcGrad)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              pathLength={1}
+              style={{
+                strokeDasharray: 1,
+                strokeDashoffset: 1,
+                animation: "drawArc 1.1s ease-out 0.15s forwards",
+                filter: "drop-shadow(0 0 6px oklch(0.65 0.30 300 / 0.8))",
+              }}
+            />
+            <defs>
+              <linearGradient id="eplArcGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stopColor="oklch(0.65 0.30 300)" />
+                <stop offset="1" stopColor="oklch(0.68 0.24 240)" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Neon cricket ball traveling the arc (motion path matches SVG) */}
+          <div
+            className="absolute left-0 top-0 h-7 w-7 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at 35% 30%, oklch(0.96 0.04 280), oklch(0.65 0.30 300) 55%, oklch(0.45 0.22 300))",
               boxShadow:
-                "0 0 20px oklch(0.65 0.30 300 / 0.8), 0 0 40px oklch(0.68 0.24 240 / 0.5), inset 0 0 8px oklch(0.95 0.05 280 / 0.4)",
-              animation: "ballBounce 1.3s cubic-bezier(0.36, 0, 0.66, -0.56) both",
+                "0 0 14px oklch(0.65 0.30 300 / 0.9), 0 0 32px oklch(0.68 0.24 240 / 0.5)",
+              offsetPath: "path('M 5 195 Q 112 25 219 165')",
+              offsetRotate: "0deg",
+              animation: "ballArc 1.1s ease-out 0.15s both, ballPulse 0.5s ease-in-out 1.25s infinite alternate",
             }}
           >
             {/* Seam */}
             <div
-              className="absolute inset-0 rounded-full"
+              className="absolute inset-[3px] rounded-full"
               style={{
-                border: "2px solid oklch(0.95 0.05 280 / 0.6)",
-                clipPath: "polygon(20% 0%, 80% 0%, 80% 100%, 20% 100%)",
+                border: "1.5px dashed oklch(0.95 0.05 280 / 0.55)",
+                animation: "seamSpin 0.8s linear infinite",
               }}
             />
           </div>
 
-          {/* Impact burst */}
+          {/* Landing impact ring */}
           <div
-            className="absolute bottom-6 left-1/2 z-10 h-20 w-20 -translate-x-1/2 rounded-full"
+            className="absolute bottom-6 right-6 h-10 w-10 -translate-y-1/2 translate-x-1/2 rounded-full border-2"
             style={{
-              background:
-                "radial-gradient(circle, oklch(0.68 0.24 240 / 0.5) 0%, oklch(0.65 0.30 300 / 0) 70%)",
-              animation: "impactBurst 0.4s ease-out 1.15s both",
+              borderColor: "oklch(0.68 0.24 240 / 0.8)",
+              boxShadow: "0 0 18px oklch(0.68 0.24 240 / 0.6)",
+              animation: "impactRing 0.7s ease-out 1.2s both",
             }}
           />
         </div>
 
         {/* EPL branding */}
-        <div className="relative z-10 mt-8 text-center">
+        <div className="relative z-10 mt-6 text-center">
           <h1
-            className="text-5xl font-extrabold tracking-tighter sm:text-6xl"
+            className="text-6xl font-extrabold tracking-tighter sm:text-7xl"
             style={{
               background: "var(--gradient-neon)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               color: "transparent",
-              textShadow:
-                "0 0 18px oklch(0.65 0.30 300 / 0.5), 0 0 36px oklch(0.68 0.24 240 / 0.3)",
-              animation: "titlePop 0.7s ease-out 1.4s both",
+              filter:
+                "drop-shadow(0 0 16px oklch(0.65 0.30 300 / 0.45)) drop-shadow(0 0 32px oklch(0.68 0.24 240 / 0.25))",
+              animation: "titlePop 0.6s cubic-bezier(0.2, 0.8, 0.3, 1.2) 1.25s both",
             }}
           >
             EPL
           </h1>
           <p
-            className="mt-2 text-sm font-medium tracking-wide text-[oklch(0.72_0.05_280)]"
-            style={{ animation: "fadeUp 0.6s ease-out 1.6s both" }}
+            className="mt-2 text-sm font-medium tracking-[0.3em] uppercase text-[oklch(0.72_0.05_280)]"
+            style={{ animation: "fadeUp 0.5s ease-out 1.5s both" }}
           >
             ESAG Premier League
           </p>
@@ -123,18 +142,15 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
 
         {/* Progress bar */}
         <div className="relative z-10 mt-10 w-56 sm:w-72">
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-[oklch(0.22_0.05_275)]">
+          <div className="h-1 w-full overflow-hidden rounded-full bg-[oklch(0.22_0.05_275)]">
             <div
               className="h-full rounded-full bg-gradient-neon"
-              style={{ animation: "loadBar 2s ease-in-out forwards" }}
+              style={{
+                animation: "loadBar 2s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+                boxShadow: "0 0 10px oklch(0.65 0.30 300 / 0.6)",
+              }}
             />
           </div>
-          <p
-            className="mt-2 text-center text-xs text-muted-foreground"
-            style={{ animation: "fadeUp 0.6s ease-out 1.7s both" }}
-          >
-            Loading the pitch…
-          </p>
         </div>
       </div>
       {children}
