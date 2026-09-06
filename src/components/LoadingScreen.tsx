@@ -90,7 +90,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
                 "radial-gradient(circle at 35% 30%, oklch(0.96 0.04 280), oklch(0.65 0.30 300) 55%, oklch(0.45 0.22 300))",
               boxShadow:
                 "0 0 14px oklch(0.65 0.30 300 / 0.9), 0 0 32px oklch(0.68 0.24 240 / 0.5)",
-              offsetPath: "path('M 5 195 Q 112 25 219 165')",
+              offsetPath: "path('M 10 130 Q 224 -40 438 110')",
               offsetRotate: "0deg",
               animation: "ballArc 1.1s ease-out 0.15s both, ballPulse 0.5s ease-in-out 1.25s infinite alternate",
             }}
