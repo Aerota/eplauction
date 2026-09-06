@@ -126,62 +126,69 @@
 }
 
 /* Loading screen animations */
-@keyframes ballBounce {
+@keyframes drawArc {
   0% {
-    transform: translate(-50%, -180px) scale(0.6);
+    stroke-dashoffset: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ballArc {
+  0% {
+    offset-distance: 0%;
     opacity: 0;
   }
-  20% {
-    opacity: 1;
-  }
-  55% {
-    transform: translate(-50%, -28px) scale(1.05);
-  }
-  70% {
-    transform: translate(-50%, 0) scale(0.95);
-  }
-  85% {
-    transform: translate(-50%, -8px) scale(1);
-  }
-  100% {
-    transform: translate(-50%, 0) scale(1);
-  }
-}
-
-@keyframes stumpPulse {
-  0% {
-    transform: scaleY(1);
-    filter: brightness(1);
-  }
-  40% {
-    transform: scaleY(1.08) skewX(3deg);
-    filter: brightness(1.6);
-  }
-  100% {
-    transform: scaleY(1);
-    filter: brightness(1);
-  }
-}
-
-@keyframes bailFly {
-  0% {
-    transform: translate(-50%, 0) rotate(0deg);
+  10% {
     opacity: 1;
   }
   100% {
-    transform: translate(-30%, -40px) rotate(18deg);
+    offset-distance: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes ballPulse {
+  0% {
+    scale: 1;
+  }
+  100% {
+    scale: 1.15;
+  }
+}
+
+@keyframes seamSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes impactRing {
+  0% {
+    transform: translate(50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(50%, -50%) scale(2.2);
     opacity: 0;
   }
 }
 
-@keyframes impactBurst {
+@keyframes groundGlow {
   0% {
-    transform: translate(-50%, 0) scale(0.4);
-    opacity: 0.9;
+    opacity: 0;
+    transform: translateX(-50%) scaleX(0.4);
   }
   100% {
-    transform: translate(-50%, 0) scale(1.8);
-    opacity: 0;
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
   }
 }
 
