@@ -11,10 +11,12 @@ export function useTeamLogos() {
   useEffect(() => {
     let active = true;
     (async () => {
-      const { data } = await supabase.rpc("get_team_logos");
+      const { data } = await supabase
+        .from("team_logos" as never)
+        .select("team_name, logo_url");
       if (!active || !data) return;
       const map: Record<string, string> = {};
-      for (const t of data) {
+      for (const t of data as { team_name: string; logo_url: string | null }[]) {
         if (t.logo_url) map[t.team_name.trim().toLowerCase()] = t.logo_url;
       }      
       setLogos(map);
