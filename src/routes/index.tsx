@@ -31,8 +31,12 @@ function Landing() {
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 py-20 text-center">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground backdrop-blur">
-          <span className="h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
+          <Link
+            to="https://esag.lk/"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-neon-blue animate-pulse" />
           Engineering Students' Association Gampaha
+        </Link> 
         </div>
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-7xl">
           <span className="text-foreground">ESAG</span>
