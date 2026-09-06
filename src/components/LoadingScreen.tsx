@@ -70,7 +70,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
               style={{
                 strokeDasharray: 1,
                 strokeDashoffset: 1,
-                animation: "drawArc 1.1s ease-out 0.15s forwards",
+                animation: "drawArc 1s ease-out 0.1s forwards",
                 filter: "drop-shadow(0 0 6px oklch(0.65 0.30 300 / 0.8))",
               }}
             />
@@ -92,7 +92,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
                 "0 0 14px oklch(0.65 0.30 300 / 0.9), 0 0 32px oklch(0.68 0.24 240 / 0.5)",
               offsetPath: "path('M 10 130 Q 224 -40 438 110')",
               offsetRotate: "0deg",
-              animation: "ballArc 1.1s ease-out 0.15s both, ballPulse 0.5s ease-in-out 1.25s infinite alternate",
+              animation: "ballArc 1s ease-out 0.1s both, ballPulse 0.5s ease-in-out 1.1s infinite alternate",
             }}
           >
             {/* Seam */}
@@ -111,7 +111,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
             style={{
               borderColor: "oklch(0.68 0.24 240 / 0.8)",
               boxShadow: "0 0 18px oklch(0.68 0.24 240 / 0.6)",
-              animation: "impactRing 0.7s ease-out 1.2s both",
+              animation: "impactRing 0.7s ease-out 1.05s both",
             }}
           />
         </div>
@@ -127,14 +127,14 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
               color: "transparent",
               filter:
                 "drop-shadow(0 0 16px oklch(0.65 0.30 300 / 0.45)) drop-shadow(0 0 32px oklch(0.68 0.24 240 / 0.25))",
-              animation: "titlePop 0.6s cubic-bezier(0.2, 0.8, 0.3, 1.2) 1.25s both",
+              animation: "titlePop 0.6s cubic-bezier(0.2, 0.8, 0.3, 1.2) 0.75s both",
             }}
           >
             EPL
           </h1>
           <p
             className="mt-2 text-sm font-medium tracking-[0.3em] uppercase text-[oklch(0.72_0.05_280)]"
-            style={{ animation: "fadeUp 0.5s ease-out 1.5s both" }}
+            style={{ animation: "fadeUp 0.5s ease-out 0.95s both" }}
           >
             ESAG Premier League
           </p>
