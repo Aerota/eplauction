@@ -43,7 +43,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
         />
 
         {/* Ball arc scene */}
-        <div className="relative z-10 h-44 w-[22rem] sm:w-[28rem]">
+        <div className="relative z-10 aspect-[448/160] w-full max-w-md">
           {/* Pitch ground line */}
           <div
             className="absolute bottom-6 left-1/2 h-px w-full -translate-x-1/2"
