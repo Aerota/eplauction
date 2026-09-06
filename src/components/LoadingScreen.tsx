@@ -107,8 +107,12 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
 
           {/* Landing impact ring */}
           <div
-            className="absolute bottom-6 right-6 h-10 w-10 -translate-y-1/2 translate-x-1/2 rounded-full border-2"
+            className="absolute left-0 top-0 h-10 w-10 rounded-full border-2"
             style={{
+              offsetPath: "path('M 10 130 Q 224 -40 438 110')",
+              offsetDistance: "100%",
+              marginLeft: "-20px",
+              marginTop: "-20px",
               borderColor: "oklch(0.68 0.24 240 / 0.8)",
               boxShadow: "0 0 18px oklch(0.68 0.24 240 / 0.6)",
               animation: "impactRing 0.7s ease-out 1.05s both",
