@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -137,10 +138,12 @@ function RootComponent() {
   }, [router, queryClient]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SiteHeader />
-      <Outlet />
-      <Toaster theme="dark" richColors position="top-right" />
-    </QueryClientProvider>
+    <LoadingScreen>
+      <QueryClientProvider client={queryClient}>
+        <SiteHeader />
+        <Outlet />
+        <Toaster theme="dark" richColors position="top-right" />
+      </QueryClientProvider>
+    </LoadingScreen>
   );
 }
