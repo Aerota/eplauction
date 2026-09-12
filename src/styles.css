@@ -126,69 +126,23 @@
 }
 
 /* Loading screen animations */
-@keyframes drawArc {
+@keyframes wheelFill {
   0% {
-    stroke-dashoffset: 1;
+    stroke-dashoffset: 289.026524;
   }
   100% {
     stroke-dashoffset: 0;
   }
 }
 
-@keyframes ballArc {
+@keyframes logoPop {
   0% {
-    offset-distance: 0%;
+    transform: scale(0.8);
     opacity: 0;
   }
-  10% {
+  100% {
+    transform: scale(1);
     opacity: 1;
-  }
-  100% {
-    offset-distance: 100%;
-    opacity: 1;
-  }
-}
-
-@keyframes ballPulse {
-  0% {
-    scale: 1;
-  }
-  100% {
-    scale: 1.15;
-  }
-}
-
-@keyframes seamSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes impactRing {
-  0% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-  30% {
-    opacity: 1;
-  }
-  100% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
-
-@keyframes groundGlow {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) scaleX(0.4);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) scaleX(1);
   }
 }
 
@@ -211,14 +165,5 @@
   100% {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-@keyframes loadBar {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
   }
 }
