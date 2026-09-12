@@ -457,18 +457,25 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      team_logos: {
+        Row: {
+          logo_url: string | null
+          team_name: string | null
+        }
+        Insert: {
+          logo_url?: string | null
+          team_name?: string | null
+        }
+        Update: {
+          logo_url?: string | null
+          team_name?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       claim_admin_role: { Args: never; Returns: boolean }
       clear_current_player: { Args: never; Returns: undefined }
-      get_team_logos: {
-        Args: never
-        Returns: {
-          logo_url: string
-          team_name: string
-        }[]
-      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
